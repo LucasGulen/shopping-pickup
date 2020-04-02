@@ -1,0 +1,11 @@
+Build de l'app pour le dev avec l'émulateur :
+ionic cordova run android --target=Nexus --livereload --ssl
+
+Build de l'apk android : 
+ionic cordova build android --prod --release
+
+Build sur le tel mode dev : 
+ionic cordova run android --device
+
+
+Signer l'apk (utiliser jarsigner)
