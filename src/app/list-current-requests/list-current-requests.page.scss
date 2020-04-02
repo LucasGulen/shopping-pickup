@@ -1,0 +1,12 @@
+.logout-btn {
+  float: right;
+  --border-radius: 45px;
+  height: 45px;
+  width: 45px;
+  margin-right: 10px;
+  background-image: url(./../../assets/icon/logout.png);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  --background: transparent;
+}

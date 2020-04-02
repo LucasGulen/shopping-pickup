@@ -20,15 +20,17 @@ const routes: Routes = [
     loadChildren: () => import('./main-livreur/main-livreur.module').then( m => m.MainLivreurPageModule)
   },
   {
+    path: 'list-current-requests',
+    loadChildren: () => import('./list-current-requests/list-current-requests.module').then( m => m.ListCurrentRequestsPageModule)
+  },
+  {
     path: 'list-services-senior',
     loadChildren: () => import('./list-services-senior/list-services-senior.module').then( m => m.ListServicesSeniorPageModule)
   },
   {
     path: 'aid-description',
     loadChildren: () => import('./aid-description/aid-description.module').then( m => m.AidDescriptionPageModule)
-  },
-
-
+  }
 ];
 
 @NgModule({
