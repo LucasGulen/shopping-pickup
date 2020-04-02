@@ -1,4 +1,6 @@
 import {Component, OnInit} from '@angular/core';
+import {Aid} from '../interfaces/Aid';
+import {Status} from '../interfaces/Status';
 
 @Component({
     selector: 'app-main-livreur',
@@ -7,23 +9,22 @@ import {Component, OnInit} from '@angular/core';
 })
 export class MainLivreurPage implements OnInit {
 
-    private aids: Array<Aid>;
+    private aids: Array<Aid> = new Array<Aid>();
 
     constructor() {
     }
 
     ngOnInit() {
+        const aid: Aid = {
+            id: 1,
+            text: 'Salut c\'est moi',
+            seniorUser: {username: 'Flavieaux', phone: '121843960'},
+            aidUser: {username: 'Loïque', phone: '121843960'},
+            location: 'Genève',
+            status: Status.CREATED
+        };
 
-      const aid: Aid = {
-        id: 1,
-        text: 'Salut c\'est moi',
-        phoneNumber: '000',
-        location: 'Genève'
-      };
-
-
-      this.aids.push(aid);
-
+        this.aids.push(aid);
     }
 
 }

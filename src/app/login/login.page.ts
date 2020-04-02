@@ -21,8 +21,7 @@ export class LoginPage implements OnInit {
   }
 
   saveTelephoneNumber() {
-    localStorage.setItem('telephone', this.userTelephone);
-    localStorage.setItem('username', this.userUsername)
+
     console.log(this.userTelephone);
     console.log(this.userTelephone);
   }
