@@ -23,6 +23,11 @@ const routes: Routes = [
     path: 'list-services-senior',
     loadChildren: () => import('./list-services-senior/list-services-senior.module').then( m => m.ListServicesSeniorPageModule)
   },
+  {
+    path: 'aid-description',
+    loadChildren: () => import('./aid-description/aid-description.module').then( m => m.AidDescriptionPageModule)
+  },
+
 
 ];
 
