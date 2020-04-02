@@ -1,0 +1,15 @@
+ion-input{
+  background-color: white;
+  border-radius: 20px;
+  text-align: center;
+  max-height: 40px;
+  max-width: 75%;
+  margin-bottom: 5%;
+}
+
+ion-button{
+  max-width: 60%;
+  min-width: 45%;
+  --border-radius: 20px;
+  --background: linear-gradient(to right, #7ce460 ,#42d77d);
+}
