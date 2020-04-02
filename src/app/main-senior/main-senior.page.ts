@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import {Router} from '@angular/router';
+import {AuthService} from '../providers/auth.service';
 
 @Component({
   selector: 'app-main-senior',
@@ -7,9 +9,21 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MainSeniorPage implements OnInit {
 
-  constructor() { }
+  constructor(private router: Router, private auth: AuthService) { }
 
   ngOnInit() {
+  }
+
+  doLogout() {
+    this.auth.logout();
+  }
+
+  onNewDemandClick() {
+    this.router.navigateByUrl('list-services-senior');
+  }
+
+  onCurrentRequestsClick() {
+    this.router.navigateByUrl('list-current-requests');
   }
 
 }

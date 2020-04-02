@@ -19,6 +19,10 @@ const routes: Routes = [
     path: 'main-livreur',
     loadChildren: () => import('./main-livreur/main-livreur.module').then( m => m.MainLivreurPageModule)
   },
+  {
+    path: 'list-current-requests',
+    loadChildren: () => import('./list-current-requests/list-current-requests.module').then( m => m.ListCurrentRequestsPageModule)
+  },
 ];
 
 @NgModule({
