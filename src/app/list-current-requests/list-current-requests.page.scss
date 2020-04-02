@@ -10,3 +10,31 @@
   background-size: contain;
   --background: transparent;
 }
+
+ion-list{
+  padding-top: 0px !important;
+  padding-bottom: 0px !important;
+}
+
+.paid-color-back {
+  background-color: #2ecc71a6;
+}
+
+.created-color-back {
+  background-color: #9b59b678;
+}
+
+.accepted-color-back {
+  background-color: #2980b963;
+}
+
+.delivered-color-back {
+  background-color: #1abc9c99;
+}
+
+.txt-card-description {
+  margin-left: 30px;
+  width: 80%;
+  margin-right: 15px;
+  text-align: justify;
+}

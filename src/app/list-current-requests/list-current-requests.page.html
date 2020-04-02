@@ -9,14 +9,22 @@
 <ion-content>
 
   <ion-list *ngFor="let request of requests">
-      <ion-card>
+      <ion-card [ngClass]="{'created-color-back': request.status === 0, 'accepted-color-back': request.status === 1, 'delivered-color-back': request.status === 2, 'paid-color-back': request.status === 3}">
 
         <ion-card-header>
-          Card Header
+          {{request.titre}}
         </ion-card-header>
 
-        <ion-card-content>
-          Lalala
+        <ion-card-content style="display: flex; flex-direction: row; align-items: center;">
+          <div style="width: 60px;">
+            <ion-img style="width: 100%" src="{{request.photoUrl}}"></ion-img>
+          </div>
+          <div class="txt-card-description">
+            {{request.description}}
+          </div>
+          <div style="text-align: center;">
+            {{getStatusName(request.status)}}
+          </div>
         </ion-card-content>
 
       </ion-card>
