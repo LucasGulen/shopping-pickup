@@ -1,15 +1,16 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>Choix de votre rôle</ion-title>
-    <ion-button (click)="doLogout()">Logout</ion-button>
+  <ion-toolbar style="paddin-top: 5px; padding-bottom: 5px;">
+      <ion-button class="logout-btn" (click)="doLogout();"></ion-button>
+    <ion-title style="margin-top: 19px;">Choix de votre rôle</ion-title>
+
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
 
   <div class="center-content">
-    <ion-button (click)="onSeniorSelected();" style="margin-bottom: 5%">Demander de l'aide</ion-button>
-    <ion-button (click)="onHelpSelected()">Proposer son aide</ion-button>
+    <ion-button (click)="onSeniorSelected();" class="ion-button" style="margin-bottom: 5%">Demander de l'aide</ion-button>
+    <ion-button (click)="onHelpSelected()" class="ion-button">Proposer son aide</ion-button>
   </div>
 
 

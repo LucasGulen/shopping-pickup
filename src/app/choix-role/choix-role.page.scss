@@ -7,7 +7,7 @@ ion-input{
   margin-bottom: 5%;
 }
 
-ion-button {
+.ion-button {
   max-width: 70%;
   min-width: 70%;
   --border-radius: 10px;
@@ -15,6 +15,20 @@ ion-button {
   max-height: 15%;
   min-height: 15%;
 }
+
+.logout-btn{
+  float: right;
+  --border-radius: 45px;
+  height: 45px;
+  width: 45px;
+  margin-right: 10px;
+  background-image: url(./../../assets/icon/logout.png);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  --background: transparent;
+}
+
 .center-content{
   height: 100%;
   display: flex;
