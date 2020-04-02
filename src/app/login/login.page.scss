@@ -11,5 +11,13 @@ ion-button{
   max-width: 60%;
   min-width: 45%;
   --border-radius: 20px;
-  --background: linear-gradient(to right, #7ce460 ,#42d77d);
+  --background: #6370ff;
+}
+
+.center-content{
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
 }

@@ -1,13 +1,13 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>Login</ion-title>
+    <ion-title>Connexion</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  <div style="height: 100%; display: flex; justify-content: center; align-items: center; flex-direction: column;">
-    <ion-input (ionChange)="searchTelephoneNumber()" placeholder="nom d'utilisateur"></ion-input>
-    <ion-input placeholder="numéro de téléphone"></ion-input>
-    <ion-button (click)="saveTelephoneNumber(userTelephone, userUsername)">se connecter</ion-button>
-  </div>
+  <form [formGroup]="userForm" class="center-content">
+    <ion-input formControlName="username" [(ngModel)]="user.username" placeholder="Entrez votre nom d'utilisateur"></ion-input>
+    <ion-input formControlName="phone" [(ngModel)]="user.phone" placeholder="Entrez votre numéro de téléphone" type="tel"></ion-input>
+    <ion-button [disabled]="!userForm.valid" (click)="saveUser()">se connecter</ion-button>
+  </form>
 </ion-content>

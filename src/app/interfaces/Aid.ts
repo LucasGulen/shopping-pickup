@@ -3,6 +3,7 @@
 // Liste de tous les utilisateurs: users
 // Utilisateur connecté: userConnected
 import {Status} from './Status';
+import {User} from './User';
 
 export interface Aid {
     id: number;
