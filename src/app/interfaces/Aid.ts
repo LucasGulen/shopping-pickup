@@ -4,12 +4,14 @@
 // Utilisateur connecté: userConnected
 import {Status} from './Status';
 import {User} from './User';
+import { AidType } from './AidType';
 
 export interface Aid {
-    id: number;
-    text: string;
-    seniorUser: User;
+    id?: number;
+    text?: string;
+    seniorUser?: User;
     aidUser: User;
     location: string;
-    status: Status;
+    status?: Status;
+    aidType?: AidType;
 }

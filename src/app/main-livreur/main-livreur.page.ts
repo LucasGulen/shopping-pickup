@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {Aid} from '../interfaces/Aid';
 import {Status} from '../interfaces/Status';
+import { AidType } from '../interfaces/AidType';
 
 @Component({
     selector: 'app-main-livreur',
@@ -21,10 +22,11 @@ export class MainLivreurPage implements OnInit {
             seniorUser: {username: 'Flavieaux', phone: '121843960'},
             aidUser: {username: 'Loïque', phone: '121843960'},
             location: 'Genève',
-            status: Status.CREATED
+            status: Status.CREATED,
+            aidType: AidType.SHOPPING,
         };
 
-        this.aids.push(aid);
+        this.aids.push(aid); 
     }
 
 }
