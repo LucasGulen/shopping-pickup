@@ -9,6 +9,7 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { SpeechRecognition } from '@ionic-native/speech-recognition/ngx';
+import { Geolocation } from '@ionic-native/geolocation/ngx';
 
 
 @NgModule({
@@ -19,6 +20,7 @@ import { SpeechRecognition } from '@ionic-native/speech-recognition/ngx';
     StatusBar,
     SplashScreen,
     SpeechRecognition,
+    Geolocation,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],
   bootstrap: [AppComponent]

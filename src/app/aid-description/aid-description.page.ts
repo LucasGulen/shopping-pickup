@@ -6,7 +6,9 @@ import { throwError } from 'rxjs';
 import { Aid } from '../interfaces/Aid';
 import { User } from '../interfaces/User';
 import { Status } from '../interfaces/Status';
-import { ModalController, AlertController } from '@ionic/angular';
+import { AlertController } from '@ionic/angular';
+import { Geolocation } from '@ionic-native/geolocation/ngx';
+import { GeoPosition } from '../interfaces/GeoPosition';
 
 @Component({
   selector: 'app-aid-description',
@@ -16,9 +18,13 @@ import { ModalController, AlertController } from '@ionic/angular';
 export class AidDescriptionPage implements OnInit {
 
   constructor(private route: ActivatedRoute,
-    private router: Router, private auth: AuthService, private alertController: AlertController) { }
+              private router: Router,
+              private auth: AuthService,
+              private alertController: AlertController,
+              private geolocation: Geolocation) { }
 
   private aidType: AidType;
+  private aidText: string;
 
   private defaultValidateMessage: string = "Votre message a bien été enregistré !";
 
@@ -37,7 +43,7 @@ export class AidDescriptionPage implements OnInit {
   }
 
   onRecordingSelected() {
-    
+
   }
 
   async onValidateSelected() {
@@ -47,11 +53,14 @@ export class AidDescriptionPage implements OnInit {
 
     const connectedUser: User = JSON.parse(localStorage.getItem("userConnected"));
 
+    const currentPosition = await this.geolocation.getCurrentPosition();
+    const location = new GeoPosition(currentPosition.coords.latitude, currentPosition.coords.longitude);
+
     const aid: Aid = {
       id: 10,
-      text: "Text",
+      text: this.aidText,
       seniorUser: connectedUser,
-      location: "To be implemented",
+      location,
       status: Status.CREATED,
       aidType: this.aidType
     }
@@ -61,7 +70,8 @@ export class AidDescriptionPage implements OnInit {
     localStorage.setItem("aids", JSON.stringify(aids));
 
     await this.showMessage(this.defaultValidateMessage);
-
+    
+    this.aidText = "";
     this.router.navigateByUrl("list-current-requests")
   }
 
