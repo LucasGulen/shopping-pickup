@@ -1,9 +1,17 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>aid-description</ion-title>
+  <ion-toolbar style="paddin-top: 5px; padding-bottom: 5px;">
+      <ion-button class="logout-btn" (click)="doLogout();"></ion-button>
+    <ion-title style="margin-top: 19px;">Description de votre demande</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-
+  <div class="center-content">
+  <ion-item class="notes">
+      <ion-label position="floating">Notes</ion-label>
+      <ion-textarea autoGrow></ion-textarea>
+    </ion-item>
+    <ion-button (click)="onRecordingSelected();" class="ion-button" style="margin-bottom: 2%">Enregistrer</ion-button>
+    <ion-button (click)="onValidateSelected()" class="ion-button">Valider</ion-button>
+  </div>
 </ion-content>
