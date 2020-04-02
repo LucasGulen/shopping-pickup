@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {Aid} from '../interfaces/Aid';
 import {Status} from '../interfaces/Status';
 import { AidType } from '../interfaces/AidType';
+import {GeoPosition} from '../interfaces/GeoPosition';
 
 @Component({
     selector: 'app-main-livreur',
@@ -21,12 +22,12 @@ export class MainLivreurPage implements OnInit {
             text: 'Salut c\'est moi',
             seniorUser: {username: 'Flavieaux', phone: '121843960'},
             aidUser: {username: 'Loïque', phone: '121843960'},
-            location: 'Genève',
+            location: new GeoPosition(46, 6),
             status: Status.CREATED,
             aidType: AidType.SHOPPING,
         };
 
-        this.aids.push(aid); 
+        this.aids.push(aid);
     }
 
 }
