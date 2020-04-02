@@ -1,0 +1,24 @@
+<ion-header>
+  <ion-toolbar style="paddin-top: 5px; padding-bottom: 5px;">
+    <ion-button class="logout-btn" (click)="doLogout();"></ion-button>
+    <ion-title style="margin-top: 19px;">Demandes en cours</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+
+<ion-content>
+
+  <ion-list *ngFor="let request of requests">
+      <ion-card>
+
+        <ion-card-header>
+          Card Header
+        </ion-card-header>
+
+        <ion-card-content>
+          Lalala
+        </ion-card-content>
+
+      </ion-card>
+  </ion-list>
+</ion-content>

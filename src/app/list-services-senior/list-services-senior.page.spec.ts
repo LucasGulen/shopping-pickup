@@ -1,19 +1,19 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
 
-import { ListServicesSeniorComponent } from './list-services-senior.component';
+import { ListServicesSeniorPage } from './list-services-senior.page';
 
-describe('ListServicesSeniorComponent', () => {
-  let component: ListServicesSeniorComponent;
-  let fixture: ComponentFixture<ListServicesSeniorComponent>;
+describe('ListServicesSeniorPage', () => {
+  let component: ListServicesSeniorPage;
+  let fixture: ComponentFixture<ListServicesSeniorPage>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ListServicesSeniorComponent ],
+      declarations: [ ListServicesSeniorPage ],
       imports: [IonicModule.forRoot()]
     }).compileComponents();
 
-    fixture = TestBed.createComponent(ListServicesSeniorComponent);
+    fixture = TestBed.createComponent(ListServicesSeniorPage);
     component = fixture.componentInstance;
     fixture.detectChanges();
   }));
