@@ -5,7 +5,7 @@ import { MainLivreurPage } from './main-livreur.page';
 
 const routes: Routes = [
   {
-    path: '',
+    path: '/main-livreur',
     component: MainLivreurPage
   }
 ];
