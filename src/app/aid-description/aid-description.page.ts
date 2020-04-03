@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, NgZone, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AuthService } from '../providers/auth.service';
 import { AidType } from '../interfaces/AidType';
@@ -9,6 +9,7 @@ import { Status } from '../interfaces/Status';
 import { AlertController } from '@ionic/angular';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
 import { GeoPosition } from '../interfaces/GeoPosition';
+import { SpeechRecognition } from '@ionic-native/speech-recognition/ngx';
 
 @Component({
   selector: 'app-aid-description',
@@ -18,15 +19,18 @@ import { GeoPosition } from '../interfaces/GeoPosition';
 export class AidDescriptionPage implements OnInit {
 
   constructor(private route: ActivatedRoute,
-              private router: Router,
-              private auth: AuthService,
-              private alertController: AlertController,
-              private geolocation: Geolocation) { }
+    private router: Router,
+    private auth: AuthService,
+    private alertController: AlertController,
+    private geolocation: Geolocation,
+    private speechRecognition: SpeechRecognition,
+    private zone: NgZone) { }
 
   private aidType: AidType;
-  private aidText: string;
+  private aidText: string = "";
 
   private defaultValidateMessage: string = "Votre message a bien été enregistré !";
+  private recording: boolean = false;
 
   ngOnInit() {
     this.route.queryParams.subscribe(params => {
@@ -36,6 +40,8 @@ export class AidDescriptionPage implements OnInit {
         throwError("The aid description page did not receive the correct parameters. params.aidType.")
       }
     });
+
+    this.getPermission();
   }
 
   doLogout() {
@@ -43,7 +49,11 @@ export class AidDescriptionPage implements OnInit {
   }
 
   onRecordingSelected() {
-
+    if (this.recording) {
+      this.stopListening();
+    } else {
+      this.startListening();
+    }
   }
 
   async onValidateSelected() {
@@ -54,6 +64,7 @@ export class AidDescriptionPage implements OnInit {
     const connectedUser: User = JSON.parse(localStorage.getItem("userConnected"));
 
     const currentPosition = await this.geolocation.getCurrentPosition();
+      
     const location = new GeoPosition(currentPosition.coords.latitude, currentPosition.coords.longitude);
 
     const aid: Aid = {
@@ -70,7 +81,7 @@ export class AidDescriptionPage implements OnInit {
     localStorage.setItem("aids", JSON.stringify(aids));
 
     await this.showMessage(this.defaultValidateMessage);
-    
+
     this.aidText = "";
     this.router.navigateByUrl("list-current-requests")
   }
@@ -85,4 +96,33 @@ export class AidDescriptionPage implements OnInit {
     alert.present();
     await alert.onDidDismiss();
   }
+
+  stopListening() {
+    this.speechRecognition.stopListening().then(() => {
+      this.recording = false;
+    });
+  }
+ 
+  getPermission() {
+    this.speechRecognition.hasPermission()
+      .then((hasPermission: boolean) => {
+        if (!hasPermission) {
+          this.speechRecognition.requestPermission();
+        }
+      });
+  }
+ 
+  startListening() {
+    this.speechRecognition.startListening().subscribe(matches => {
+      this.updateText(matches[0]);
+    });
+    this.recording = true;
+  }
+
+  updateText(text) {
+    this.zone.run(() => {
+      this.aidText += text;
+    });    
+  }
+
 }

@@ -17,4 +17,4 @@ import { AidDescriptionPage } from './aid-description.page';
   ],
   declarations: [AidDescriptionPage]
 })
-export class AidDescriptionPageModule {}
+export class AidDescriptionPageModule { }
