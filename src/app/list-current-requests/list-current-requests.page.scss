@@ -41,12 +41,9 @@ ion-list{
 }
 
 .btn-to-paiement {
-  text-align: center;
-  font-style: italic;
-  border-style: solid;
-  border-width: 1px;
-  padding: 10px 10px 10px 10px;
-  border-radius: 20px;
-  color: #1e2023;
-  background-color: #42d77d;
+  color: #42d77d;
+  --border-style: solid;
+  --border-width: 1px;
+  --border-radius: 20px;
+  --background: #ffffff;
 }

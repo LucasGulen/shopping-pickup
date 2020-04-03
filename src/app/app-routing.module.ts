@@ -30,7 +30,11 @@ const routes: Routes = [
   {
     path: 'aid-description',
     loadChildren: () => import('./aid-description/aid-description.module').then( m => m.AidDescriptionPageModule)
+  },  {
+    path: 'paiement',
+    loadChildren: () => import('./paiement/paiement.module').then( m => m.PaiementPageModule)
   }
+
 ];
 
 @NgModule({

@@ -8,22 +8,25 @@
 
 <ion-content>
 
-  <ion-list *ngFor="let request of requests">
-      <ion-card [ngClass]="{'created-color-back': request.status === 0, 'accepted-color-back': request.status === 1, 'delivered-color-back': request.status === 2, 'paid-color-back': request.status === 3}">
+  <ion-list *ngFor="let aid of aids">
+      <ion-card #aidElem [attr.data-aidUserPhone]="aid.aidUser.phone"  [ngClass]="{'created-color-back': aid.status === 0, 'accepted-color-back': aid.status === 1, 'delivered-color-back': aid.status === 2, 'paid-color-back': aid.status === 3}">
 
-        <ion-card-header style="display: flex;justify-content: space-between;">
-          <div style="color: black;text-decoration: underline;">{{request.titre}}</div>
-          <div style="text-align: center;font-style: italic;">
-            {{getStatusName(request.status)}}
+        <ion-card-header style="display: flex;justify-content: space-between;align-items: center;">
+          <div style="color: black;text-decoration: underline;">{{aid.aidType | aidTitle}}</div>
+          <div *ngIf="isPaymentNeeded(aid.status)">
+            <ion-button (click)="goToPayment(aidElem)" class="btn-to-paiement">{{getStatusName(aid.status)}}</ion-button>
+          </div>
+          <div *ngIf="!isPaymentNeeded(aid.status)" style="text-align: center;font-style: italic;">
+            {{getStatusName(aid.status)}}
           </div>
         </ion-card-header>
 
         <ion-card-content style="display: flex; flex-direction: row; align-items: center;">
           <div style="width: 60px;">
-            <ion-img style="width: 100%" src="{{request.photoUrl}}"></ion-img>
+            <ion-img style="width: 100%" src="{{aid.aidType | aidIcon}}"></ion-img>
           </div>
           <div class="txt-card-description">
-            {{request.description}}
+            {{aid.text}}
           </div>
         </ion-card-content>
 
