@@ -1,33 +1,29 @@
 ion-input{
     background-color: white;
-    border-radius: 20px;
     text-align: center;
     max-height: 40px;
     max-width: 75%;
     margin-bottom: 5%;
+    border : 2px solid rgb(15,15,64.1);
+    border-radius: 5px;
   }
   
   .ion-button {
     max-width: 70%;
     min-width: 70%;
-    --border-radius: 10px;
-    --background: #6370ff;
+    border-radius: 5px;
+    background-color: rgb(15,15,64.1);
     max-height: 15%;
     min-height: 15%;
   }
-  
-  .logout-btn{
-    float: right;
-    --border-radius: 45px;
-    height: 45px;
-    width: 45px;
-    margin-right: 10px;
-    background-image: url(./../../assets/icon/logout.png);
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: contain;
-    --background: transparent;
-  }
+
+.toolbar--logout{
+  float: right;
+  height: 35px;
+  width: 35px;
+  margin: 10px 10px 10px 0;
+}
+
   
   .center-content{
     height: 100%;
@@ -49,4 +45,9 @@ ion-input{
     --border-color: transparent;
     }
 
-  
+ ion-toolbar{
+   display: flex;
+   justify-content: center;
+   align-items: center;
+ }
+

@@ -18,49 +18,48 @@ import {SpeechRecognition} from '@ionic-native/speech-recognition/ngx';
 })
 export class AidDescriptionPage implements OnInit {
 
-    constructor(private route: ActivatedRoute,
-                private router: Router,
-                private auth: AuthService,
-                private alertController: AlertController,
-                private geolocation: Geolocation,
-                private speechRecognition: SpeechRecognition,
-                private zone: NgZone) {
-    }
+  constructor(private route: ActivatedRoute,
+              private router: Router,
+              private auth: AuthService,
+              private alertController: AlertController,
+              private geolocation: Geolocation,
+              private speechRecognition: SpeechRecognition,
+              private zone: NgZone) { }
 
-    private aidType: AidType;
-    private aidText: string = "";
+  private aidType: AidType;
+  private aidText = '';
 
-    private defaultValidateMessage: string = "Votre message a bien été enregistré !";
-    private recording: boolean = false;
+  private defaultValidateMessage = 'Votre message a bien été enregistré !';
+  private recording = false;
 
-    ngOnInit() {
-        this.route.queryParams.subscribe(params => {
-            if (params && params.aidType) {
-                this.aidType = params.aidType;
-            } else {
-                throwError("The aid description page did not receive the correct parameters. params.aidType.")
-            }
-        });
+  ngOnInit() {
+    this.route.queryParams.subscribe(params => {
+      if (params && params.aidType) {
+        this.aidType = params.aidType;
+      } else {
+        throwError('The aid description page did not receive the correct parameters. params.aidType.');
+      }
+    });
 
-        this.getPermission();
-    }
+    this.getPermission();
+  }
 
-    doLogout() {
-        this.auth.logout();
-    }
+  doLogout() {
+    this.auth.logout();
+  }
 
-    onRecordingSelected() {
-        if (this.recording) {
-            this.stopListening();
-        } else {
-            this.startListening();
-        }
-    }
+  onRecordingSelected() {
+      if (this.recording) {
+          this.stopListening();
+      } else {
+          this.startListening();
+      }
+  }
 
     async onValidateSelected() {
         let aids: Array<Aid> = JSON.parse(localStorage.getItem("aids"));
 
-        if (!aids) aids = new Array();
+        if (!aids) { aids = new Array(); }
 
         const connectedUser: User = JSON.parse(localStorage.getItem("userConnected"));
 
@@ -126,5 +125,4 @@ export class AidDescriptionPage implements OnInit {
             this.aidText += text;
         });
     }
-
 }

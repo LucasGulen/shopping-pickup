@@ -4,6 +4,8 @@ import {Status} from '../interfaces/Status';
 import {AidType} from '../interfaces/AidType';
 import {GeoPosition} from '../interfaces/GeoPosition';
 import {Geolocation} from '@ionic-native/geolocation/ngx';
+import {AlertController, ToastController} from '@ionic/angular';
+import {AuthService} from '../providers/auth.service';
 
 @Component({
     selector: 'app-main-livreur',
@@ -15,11 +17,11 @@ export class MainLivreurPage implements OnInit {
     private aids: Array<Aid> = new Array<Aid>();
     private displayedAids: Array<Aid> = new Array<Aid>();
     private location: GeoPosition;
-    private aidTypes: Array<{}> = [];
-    private selectedAidType = 0;
     private isSomeData = false;
+    private aidTypes: Array<number> = [];
+    private selectedAidType = -1;
 
-    constructor(private geolocation: Geolocation) {
+    constructor(private geolocation: Geolocation, private toastCtrl: ToastController, private alertCtrl: AlertController, private auth: AuthService) {
     }
 
     async ngOnInit() {
@@ -27,13 +29,8 @@ export class MainLivreurPage implements OnInit {
         this.location = new GeoPosition(position.coords.latitude, position.coords.longitude);
         this.populateData();
         const keys = Object.keys(AidType);
-        const values = keys.splice(keys.length / 2, keys.length);
-        keys.forEach((key, idx) => {
-            this.aidTypes.push({
-                id: key,
-                value: values[idx]
-            });
-        });
+        // tslint:disable-next-line:radix
+        this.aidTypes = keys.splice(0, keys.length / 2).map((id) => parseInt(id));
     }
 
 
@@ -81,15 +78,6 @@ export class MainLivreurPage implements OnInit {
         // this.sortArrayByLocation()
     }
 
-    takeAid(aid: Aid) {
-        aid.aidUser = JSON.parse(localStorage.getItem('userConnected'));
-        localStorage.setItem('notificationAid', JSON.stringify(aid));
-        this.aids[this.aids.indexOf(aid)].status = Status.ACCEPTED;
-        localStorage.setItem('aids', JSON.stringify(this.aids));
-        this.aids = this.filterArrayByStatus(this.aids);
-        this.displayedAids = this.aids;
-    }
-
     filterArrayByStatus(arr: Array<Aid>) {
         arr = arr.filter( aid => aid.status !== Status.ACCEPTED);
         if (arr.length === 0) {
@@ -100,6 +88,42 @@ export class MainLivreurPage implements OnInit {
         return arr;
     }
 
+    async takeAid(aid: Aid) {
+        const alert = await this.alertCtrl.create({
+            header: 'Aider quelqu\'un',
+            message: 'Vous-êtes sur le point d\'aider <strong>' + aid.seniorUser.username + '</strong>. Veuillez suivre les recommandations d\'hygiène !',
+            buttons: [
+                {
+                    text: 'Je ne suis qu\'un méchant',
+                    role: 'cancel',
+                    cssClass: 'secondary',
+                }, {
+                    text: 'Je suis sur de ce que je fais',
+                    cssClass: 'success',
+                    handler: async _ => {
+                        const toast = await this.toastCtrl.create({
+                            duration: 2000,
+                            header: 'Vous avez décidé d\'aider ' + aid.seniorUser.username,
+                            message: 'Merci pour votre aide !',
+                        });
+                        toast.present();
+                        //
+                        aid.aidUser = JSON.parse(localStorage.getItem('userConnected'));
+                        localStorage.setItem('notificationAid', JSON.stringify(aid));
+                        this.aids[this.aids.indexOf(aid)].status = Status.ACCEPTED;
+                        localStorage.setItem('aids', JSON.stringify(this.aids));
+                        this.aids = this.filterArrayByStatus(this.aids);
+                        this.displayedAids = this.aids;
+                        //
+                        // this.aids.splice(this.aids.indexOf(aid), 1);
+                        this.aidTypeChange();
+                    }
+                }
+            ]
+        });
+        alert.present();
+    }
+
     sortArrayByLocation(arr: Array<Aid>) {
         arr.sort((aid1, aid2) =>
             aid1.location.distance(this.location) - aid2.location.distance(this.location)
@@ -108,6 +132,10 @@ export class MainLivreurPage implements OnInit {
 
     randomIntFromInterval(min, max) {
         return Math.floor(Math.random() * (max - min + 1) + min);
+    }
+
+    doLogout() {
+        this.auth.logout();
     }
 
 

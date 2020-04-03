@@ -7,7 +7,7 @@ import { IonicModule } from '@ionic/angular';
 import { ListCurrentRequestsPageRoutingModule } from './list-current-requests-routing.module';
 
 import { ListCurrentRequestsPage } from './list-current-requests.page';
-import {PipesModule} from "../pipes/pipes.module";
+import {PipesModule} from '../pipes/pipes.module';
 
 @NgModule({
     imports: [

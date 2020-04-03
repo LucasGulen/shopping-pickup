@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
-import { Router, NavigationExtras } from '@angular/router';
+import {Component, OnInit} from '@angular/core';
+import {NavigationExtras, Router} from '@angular/router';
 import {AuthService} from '../providers/auth.service';
-import { Status } from '../interfaces/Status';
-import { AidType } from '../interfaces/AidType';
+import {AidType} from '../interfaces/AidType';
+
 
 
 @Component({
@@ -12,29 +12,30 @@ import { AidType } from '../interfaces/AidType';
 })
 export class ListServicesSeniorPage implements OnInit {
 
-  constructor(private router : Router, private auth : AuthService) { }
+  private services: Array<Number> = [];
+
+  constructor(private router: Router, private auth: AuthService) { }
 
   ngOnInit() {
+    const keys = Object.keys(AidType);
+    // tslint:disable-next-line:radix
+    this.services = keys.splice(0, keys.length / 2).map((id) => parseInt(id));
   }
 
   doLogout() {
     this.auth.logout();
   }
 
-  onShoppingSelected() {
-    this.router.navigate(['aid-description'], this.getNavigationExtras(AidType.SHOPPING));
+  onSelect(service: number) {
+    this.router.navigate(['aid-description'], this.getNavigationExtras(service));
   }
 
-  onITSelected() {
-    this.router.navigate(['aid-description'], this.getNavigationExtras(AidType.IT));
-  }
-
-  getNavigationExtras(aidType : AidType) : NavigationExtras {
+  getNavigationExtras(aidType: number): NavigationExtras {
     return {
       queryParams: {
         aidType
       }
-    };  
+    };
   }
 
 }

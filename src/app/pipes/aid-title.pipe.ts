@@ -7,7 +7,7 @@ import {aidTypeRecord} from '../../environments/environment';
 })
 export class AidTitlePipe implements PipeTransform {
 
-  transform(value: AidType): string {
+  transform(value: AidType|number): string {
     return aidTypeRecord[value].title;
   }
 
