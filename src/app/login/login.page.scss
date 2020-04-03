@@ -1,17 +1,22 @@
 ion-input{
   background-color : white;
-  border-radius: 20px;
+  border-radius: 5px;
   text-align: center;
   max-height: 40px;
   max-width: 75%;
   margin-bottom: 5%;
+  border : 2px solid rgb(15,15,64.1); 
 }
 
 ion-button{
   max-width: 60%;
   min-width: 45%;
-  --border-radius: 20px;
-  --background: #6370ff;
+  border-radius: 5px;
+  background-color: rgb(15,15,64.1);
+}
+
+ion-toolbar{
+  background-color: rgb(15,15,64.1);
 }
 
 .center-content{
