@@ -5,7 +5,7 @@
 </ion-header>
 
 <ion-content>
-    <ion-select placeholder="Sélectionner votre type d'aide" [(ngModel)]="selectedAidType" (ionChange)="aidTypeChange()">
+    <ion-select *ngIf="isSomeData" placeholder="Sélectionner votre type d'aide" [(ngModel)]="selectedAidType" (ionChange)="aidTypeChange()">
         <ion-select-option value="-1">Toutes les demandes</ion-select-option>
         <ion-select-option *ngFor="let type of aidTypes" value="{{type.id}}">{{type.value | titlecase}} </ion-select-option>
 <!--        <ion-select-option value="10">Test </ion-select-option>-->
@@ -28,18 +28,23 @@
               </ion-card-content>
 
           </ion-card>
-<!--      <ion-item *ngFor="let aid of aids" class="item">-->
-<!--          <ion-chip outline class="item&#45;&#45;chip">-->
-<!--              {{aid.aidType | titlecase}}-->
-<!--          </ion-chip>-->
-<!--          <ion-label>-->
-<!--              <h2>{{aid.seniorUser.username}}</h2>-->
-<!--              <p>{{aid.text | textDescription:5}}</p>-->
-<!--          </ion-label>-->
-<!--          <ion-button (click)="takeAid(aid)" color="success" fill="outline" class="item&#45;&#45;button ion-text-wrap" slot="end">-->
-<!--              Prendre-->
-<!--              la course-->
-<!--          </ion-button>-->
-<!--      </ion-item>-->
-  </ion-list>
+
+    <!--      <ion-item *ngFor="let aid of aids" class="item">-->
+    <!--          <ion-chip outline class="item&#45;&#45;chip">-->
+    <!--              {{aid.aidType | titlecase}}-->
+    <!--          </ion-chip>-->
+    <!--          <ion-label>-->
+    <!--              <h2>{{aid.seniorUser.username}}</h2>-->
+    <!--              <p>{{aid.text | textDescription:5}}</p>-->
+    <!--          </ion-label>-->
+    <!--          <ion-button (click)="takeAid(aid)" color="success" fill="outline" class="item&#45;&#45;button ion-text-wrap" slot="end">-->
+    <!--              Prendre-->
+    <!--              la course-->
+    <!--          </ion-button>-->
+    <!--      </ion-item>-->
+
+      </ion-list>
+
+    <ion-title *ngIf="!isSomeData" class="no-data-title">Aucune demande pour l'instant, <br> reviens plus tard ...</ion-title>
+
 </ion-content>

@@ -17,6 +17,7 @@ export class MainLivreurPage implements OnInit {
     private location: GeoPosition;
     private aidTypes: Array<{}> = [];
     private selectedAidType = 0;
+    private isSomeData = false;
 
     constructor(private geolocation: Geolocation) {
     }
@@ -37,33 +38,38 @@ export class MainLivreurPage implements OnInit {
 
 
     populateData() {
+        const storageAids: Array<Aid> = JSON.parse(localStorage.getItem('aids'));
+        if (storageAids === null) {
+            for (let i = 0; i < 10; i++) {
 
-        for (let i = 0; i < 10; i++) {
-
-            const aid: Aid = {
-                id: i,
-                text: 'Ceci est la description de la demande.',
-                seniorUser: {username: 'Flavio', phone: '121843960'},
-                location: new GeoPosition(this.randomIntFromInterval(10, 40), 6),
-                status: Status.CREATED,
-                aidType: 0,
-            };
-            switch (this.randomIntFromInterval(0, 2)) {
-                case 0:
-                    aid.aidType = AidType.IT;
-                    break;
-                case 1:
-                    aid.aidType = AidType.SHOPPING;
-                    break;
-                case 2:
-                    aid.aidType = AidType.ANIMALS;
-                    break;
+                const aid: Aid = {
+                    id: i,
+                    text: 'Ceci est la description de la demande.',
+                    seniorUser: {username: 'Flavio', phone: '121843960'},
+                    location: new GeoPosition(this.randomIntFromInterval(10, 40), 6),
+                    status: Status.CREATED,
+                    aidType: 0,
+                };
+                switch (this.randomIntFromInterval(0, 2)) {
+                    case 0:
+                        aid.aidType = AidType.IT;
+                        break;
+                    case 1:
+                        aid.aidType = AidType.SHOPPING;
+                        break;
+                    case 2:
+                        aid.aidType = AidType.ANIMALS;
+                        break;
+                }
+                this.aids.push(aid);
             }
-            this.aids.push(aid);
+        } else {
+            storageAids.forEach( aid => aid.location = new GeoPosition(aid.location.latitude, aid.location.longitude))
+            this.aids = storageAids;
         }
         this.sortArrayByLocation(this.aids);
+        this.aids = this.filterArrayByStatus(this.aids);
         this.displayedAids = this.aids;
-
     }
 
     aidTypeChange() {
@@ -76,7 +82,22 @@ export class MainLivreurPage implements OnInit {
     }
 
     takeAid(aid: Aid) {
-        console.log(aid);
+        aid.aidUser = JSON.parse(localStorage.getItem('userConnected'));
+        localStorage.setItem('notificationAid', JSON.stringify(aid));
+        this.aids[this.aids.indexOf(aid)].status = Status.ACCEPTED;
+        localStorage.setItem('aids', JSON.stringify(this.aids));
+        this.aids = this.filterArrayByStatus(this.aids);
+        this.displayedAids = this.aids;
+    }
+
+    filterArrayByStatus(arr: Array<Aid>) {
+        arr = arr.filter( aid => aid.status !== Status.ACCEPTED);
+        if (arr.length === 0) {
+            this.isSomeData = false;
+        } else {
+            this.isSomeData = true;
+        }
+        return arr;
     }
 
     sortArrayByLocation(arr: Array<Aid>) {

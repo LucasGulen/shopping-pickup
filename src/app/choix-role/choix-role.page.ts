@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import {Router} from '@angular/router';
 import {AuthService} from '../providers/auth.service';
-import {AlertController} from "@ionic/angular";
+import {AlertController} from '@ionic/angular';
+import {Aid} from '../interfaces/Aid';
+import {User} from '../interfaces/User';
 
 @Component({
   selector: 'app-choix-role',
@@ -15,9 +17,9 @@ export class ChoixRolePage implements OnInit {
   role;
 
   ngOnInit() {
-    localStorage.setItem('notification', 'false');
-    const mustNotify = JSON.parse(localStorage.getItem('notification'));
-    if (mustNotify) {
+    const notificationAid: Aid = JSON.parse(localStorage.getItem('notificationAid'));
+    const userConnected: User = JSON.parse(localStorage.getItem('userConnected'));
+    if (notificationAid !== null && userConnected.username == notificationAid.seniorUser.username) {
       this.notification();
     }
   }
@@ -39,9 +41,13 @@ export class ChoixRolePage implements OnInit {
           text: 'Non merci',
           role: 'cancel',
           cssClass: 'secondary',
+          handler: () => {
+            localStorage.setItem('notificationAid', null);
+          }
         }, {
           text: 'Ok',
           handler: () => {
+            localStorage.setItem('notificationAid', null);
             this.router.navigateByUrl('list-current-requests');
           }
         }

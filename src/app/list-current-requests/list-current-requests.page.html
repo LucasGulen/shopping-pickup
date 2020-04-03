@@ -9,7 +9,7 @@
 <ion-content>
 
   <ion-list *ngFor="let aid of aids">
-      <ion-card #aidElem [attr.data-aidUserPhone]="aid.aidUser.phone"  [ngClass]="{'created-color-back': aid.status === 0, 'accepted-color-back': aid.status === 1, 'delivered-color-back': aid.status === 2, 'paid-color-back': aid.status === 3}">
+      <ion-card #aidElem [attr.data-aidUserPhone]="aid.aidUser !== undefined && aid.aidUser !== null ? aid.aidUser.phone: ''"  [ngClass]="{'created-color-back': aid.status === 0, 'accepted-color-back': aid.status === 1, 'delivered-color-back': aid.status === 2, 'paid-color-back': aid.status === 3}">
 
         <ion-card-header style="display: flex;justify-content: space-between;align-items: center;">
           <div style="color: black;text-decoration: underline;">{{aid.aidType | aidTitle}}</div>
