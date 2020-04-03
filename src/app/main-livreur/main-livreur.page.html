@@ -4,25 +4,28 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content scrollY="false">
-      <ion-list>
-          <ion-card *ngFor="let aid of aids">
+<ion-content>
+    <ion-select placeholder="Sélectionner votre type d'aide" [(ngModel)]="selectedAidType" (ionChange)="aidTypeChange()">
+        <ion-select-option value="-1">Toutes les demandes</ion-select-option>
+        <ion-select-option *ngFor="let type of aidTypes" value="{{type.id}}">{{type.value | titlecase}} </ion-select-option>
+<!--        <ion-select-option value="10">Test </ion-select-option>-->
 
-              <ion-card-header>
-                  {{aid.aidType | aidIcon}}
+    </ion-select>
+      <ion-list>
+          <ion-card *ngFor="let aid of displayedAids" class="card">
+
+              <ion-card-header class="card--header">
+                  <ion-card-title class="header--title">{{aid.aidType | aidTitle}}</ion-card-title>
+                  <ion-card-subtitle class="header--subtitle ion-text-capitalize">Distance: {{aid.location.distance(this.location) | number:'1.1-1'}} km</ion-card-subtitle>
               </ion-card-header>
 
-<!--              <ion-card-content style="display: flex; flex-direction: row; align-items: center;">-->
-<!--                  <div style="width: 60px;">-->
-<!--                      <ion-img style="width: 100%" src="{{request.photoUrl}}"></ion-img>-->
-<!--                  </div>-->
-<!--                  <div class="txt-card-description">-->
-<!--                      {{request.description}}-->
-<!--                  </div>-->
-<!--                  <div style="text-align: center;">-->
-<!--                      {{getStatusName(request.status)}}-->
-<!--                  </div>-->
-<!--              </ion-card-content>-->
+              <ion-card-content class="card--content">
+                  <ion-img class="card--image" src="/assets/icon/{{aid.aidType | aidIcon}}"></ion-img>
+                  <p class="card--description">
+                      {{aid.text}}
+                  </p>
+                  <ion-button (click)="takeAid(aid)"  class="card--button ion-text-wrap" fill="outline" color="success">Prendre la demande</ion-button>
+              </ion-card-content>
 
           </ion-card>
 <!--      <ion-item *ngFor="let aid of aids" class="item">-->

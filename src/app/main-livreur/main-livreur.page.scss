@@ -1,13 +1,38 @@
-.item--chip {
-  //height: 60%;
-  font-size: 0.6rem;
+.card--header {
+  font-size: 0.8rem;
+  color: black;
+  font-weight: bold;
+  padding-bottom: 0;
 }
-.item--button {
-  height: 80%;
+
+.header--title {
+  font-size: 1rem;
+}
+.header--subtitle {
+  //f
+}
+
+.card--content {
+  font-size: 0.8rem;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 5px 5px 10px 5px;
+
+}
+.card--image {
+  width: 50px;
+  height: auto;
+}
+
+.card--description {
+  padding-left: 10px;
+  padding-right: 5px;
+}
+
+.card--button {
   min-width: 20%;
-  margin-right: -2.5%;
-}
-.item {
-  --padding-start: 5px;
-  --padding-end: 5px;
+  //height: 100%;
+  font-size: 0.8rem;
+  margin-top: -10px;
 }

@@ -16,6 +16,10 @@ export const aidTypeRecord: Record<AidType, {title: string, icon: string}> = {
     [AidType.SHOPPING]: {
         title: 'Demande de courses',
         icon: 'shopping_cart.svg'
+    },
+    [AidType.ANIMALS] : {
+        title: 'Demande pour animaux',
+        icon: 'pet.svg'
     }
 };
 
