@@ -3,6 +3,7 @@ import {Aid} from '../interfaces/Aid';
 import {User} from '../interfaces/User';
 import {Router} from '@angular/router';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
+import { GeoPosition } from '../interfaces/GeoPosition';
 
 @Component({
   selector: 'app-login',
@@ -22,6 +23,10 @@ export class LoginPage implements OnInit {
   }
 
   ngOnInit() {
+    const pos1 = new GeoPosition(46.192802, 6.202916);
+    const pos2 = new GeoPosition(46.203774, 6.222748);
+
+    console.log("Distance entre les deux points" + pos2.distance(pos1));
 
   }
 
