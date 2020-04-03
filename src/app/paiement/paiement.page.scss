@@ -16,19 +16,6 @@ ion-input{
   min-height: 15%;
 }
 
-.logout-btn{
-  float: right;
-  --border-radius: 45px;
-  height: 45px;
-  width: 45px;
-  margin-right: 10px;
-  background-image: url(./../../assets/icon/logout.png);
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: contain;
-  --background: transparent;
-}
-
 .center-content{
   height: 100%;
   display: flex;
@@ -37,3 +24,11 @@ ion-input{
   flex-direction: column;
 }
 
+
+.toolbar--logout{
+    float: right;
+    height: 35px;
+    width: 35px;
+    margin: 10px 10px 10px 0;
+  }
+  
