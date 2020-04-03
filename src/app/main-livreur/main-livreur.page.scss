@@ -1,13 +1,49 @@
-.item--chip {
-  //height: 60%;
-  font-size: 0.6rem;
+.card--header {
+  font-size: 0.8rem;
+  color: black;
+  font-weight: bold;
+  padding-bottom: 0;
 }
-.item--button {
-  height: 80%;
+
+.header--title {
+  font-size: 1rem;
+}
+
+.card--content {
+  font-size: 0.8rem;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 5px 5px 10px 5px;
+
+}
+.card--image {
+  width: 50px;
+  height: auto;
+}
+
+.card--description {
+  padding-left: 10px;
+  padding-right: 5px;
+}
+
+.card--button {
   min-width: 20%;
-  margin-right: -2.5%;
+  //height: 100%;
+  font-size: 0.8rem;
+  margin-top: -10px;
 }
-.item {
-  --padding-start: 5px;
-  --padding-end: 5px;
+
+.no-data-title{
+  margin-top: 50%;
+  color: #bdb3b3;
+  margin: 50% 10px 0px 10px;
+  text-align: center;
+}
+
+.toolbar--logout{
+  float: right;
+  height: 35px;
+  width: 35px;
+  margin: 10px 10px 10px 0;
 }

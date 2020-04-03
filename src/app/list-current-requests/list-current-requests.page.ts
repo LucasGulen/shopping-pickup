@@ -26,7 +26,14 @@ export class ListCurrentRequestsPage implements OnInit {
 
     constructor(private auth: AuthService, private router: Router, private alertController: AlertController) {
         this.seniorUser = JSON.parse(localStorage.getItem('userConnected'));
-        this.setDefaultStaticAidRequests();
+        const tmpAids: Array<Aid> = JSON.parse(localStorage.getItem('aids'));
+        // Try to load local storage aids list, otherwise load some static data to show something
+        console.log(tmpAids);
+        if (tmpAids == null) {
+            this.setDefaultStaticAidRequests();
+        } else {
+            this.aids = tmpAids;
+        }
     }
 
     ngOnInit() {

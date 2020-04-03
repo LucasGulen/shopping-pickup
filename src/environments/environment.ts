@@ -10,14 +10,18 @@ export const environment = {
 
 const pathToIcons = '/assets/icon/';
 
-export const aidTypeRecord: Record<AidType, {title: string, icon: string}> = {
+export const aidTypeRecord: Record<AidType|number, {title: string, icon: string}> = {
     [AidType.IT]: {
-        title: 'Demande de soutien informatique',
+        title: 'Demande informatique',
         icon: pathToIcons + 'pc.png'
     },
     [AidType.SHOPPING]: {
         title: 'Demande de courses',
-        icon: pathToIcons + 'shopping_cart.svg'
+        icon:  pathToIcons + 'shopping_cart.svg'
+    },
+    [AidType.ANIMALS] : {
+        title: 'Demande pour animaux',
+        icon: pathToIcons + 'pet.svg'
     }
 };
 
