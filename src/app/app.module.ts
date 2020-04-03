@@ -17,7 +17,7 @@ import {AidTitlePipe} from './pipes/aid-title.pipe';
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
-  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule],
+  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, PipesModule],
   providers: [
     StatusBar,
     SplashScreen,

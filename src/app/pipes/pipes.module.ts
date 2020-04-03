@@ -9,10 +9,6 @@ import {FormsModule} from '@angular/forms';
 @NgModule({
     declarations: [AidTitlePipe, AidIconPipe, AidDescriptionPipe],
     imports: [
-        CommonModule,
-        FormsModule,
-        IonicModule,
-
     ],
     exports: [AidTitlePipe, AidIconPipe, AidDescriptionPipe],
 })

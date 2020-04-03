@@ -8,7 +8,8 @@ import {aidTypeRecord} from '../../environments/environment';
 export class AidTitlePipe implements PipeTransform {
 
   transform(value: AidType): string {
-    return aidTypeRecord[AidType[value]].title;
+    console.log(value)
+    return aidTypeRecord[value].title;
   }
 
 }

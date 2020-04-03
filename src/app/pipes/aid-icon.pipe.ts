@@ -8,7 +8,7 @@ import {aidTypeRecord} from '../../environments/environment';
 export class AidIconPipe implements PipeTransform {
 
   transform(value: AidType): string {
-    return aidTypeRecord[AidType[value]].icon;
+    return aidTypeRecord[value].icon;
 
   }
 
