@@ -9,7 +9,7 @@ export class AuthService {
   constructor(private router: Router) { }
 
   logout() {
-    localStorage.removeItem("userConnected");
+    localStorage.removeItem('userConnected');
     this.router.navigateByUrl('login');
   }
 }
