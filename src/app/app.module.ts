@@ -12,7 +12,7 @@ import { SpeechRecognition } from '@ionic-native/speech-recognition/ngx';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
 import {PipesModule} from './pipes/pipes.module';
 import {AidTitlePipe} from './pipes/aid-title.pipe';
-
+import { CardIO } from '@ionic-native/card-io/ngx';
 
 @NgModule({
   declarations: [AppComponent],
@@ -23,6 +23,7 @@ import {AidTitlePipe} from './pipes/aid-title.pipe';
     SplashScreen,
     SpeechRecognition,
     Geolocation,
+    CardIO,
     {provide: RouteReuseStrategy, useClass: IonicRouteStrategy}
   ],
   exports: [],

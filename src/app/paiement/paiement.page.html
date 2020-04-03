@@ -1,9 +1,13 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>paiement</ion-title>
+  <ion-toolbar style="padding-top: 5px; padding-bottom: 5px;">
+      <ion-button class="logout-btn" (click)="doLogout();"></ion-button>
+    <ion-title style="margin-top: 19px;">Paiement</ion-title>
+
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-
+  <div class="center-content">
+      <ion-button (click)="onScanningSelected();" class="ion-button" style="margin-bottom: 5%">Scanner votre carte</ion-button>
+  </div>
 </ion-content>
