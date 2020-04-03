@@ -8,9 +8,6 @@
 .header--title {
   font-size: 1rem;
 }
-.header--subtitle {
-  //f
-}
 
 .card--content {
   font-size: 0.8rem;
@@ -35,4 +32,11 @@
   //height: 100%;
   font-size: 0.8rem;
   margin-top: -10px;
+}
+
+.toolbar--logout{
+  float: right;
+  height: 35px;
+  width: 35px;
+  margin: 10px 10px 10px 0;
 }

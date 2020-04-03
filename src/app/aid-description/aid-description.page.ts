@@ -19,25 +19,25 @@ import { SpeechRecognition } from '@ionic-native/speech-recognition/ngx';
 export class AidDescriptionPage implements OnInit {
 
   constructor(private route: ActivatedRoute,
-    private router: Router,
-    private auth: AuthService,
-    private alertController: AlertController,
-    private geolocation: Geolocation,
-    private speechRecognition: SpeechRecognition,
-    private zone: NgZone) { }
+              private router: Router,
+              private auth: AuthService,
+              private alertController: AlertController,
+              private geolocation: Geolocation,
+              private speechRecognition: SpeechRecognition,
+              private zone: NgZone) { }
 
   private aidType: AidType;
-  private aidText: string = "";
+  private aidText = '';
 
-  private defaultValidateMessage: string = "Votre message a bien été enregistré !";
-  private recording: boolean = false;
+  private defaultValidateMessage = 'Votre message a bien été enregistré !';
+  private recording = false;
 
   ngOnInit() {
     this.route.queryParams.subscribe(params => {
       if (params && params.aidType) {
         this.aidType = params.aidType;
       } else {
-        throwError("The aid description page did not receive the correct parameters. params.aidType.")
+        throwError('The aid description page did not receive the correct parameters. params.aidType.');
       }
     });
 
@@ -57,14 +57,14 @@ export class AidDescriptionPage implements OnInit {
   }
 
   async onValidateSelected() {
-    let aids: Array<Aid> = JSON.parse(localStorage.getItem("aids"));
+    let aids: Array<Aid> = JSON.parse(localStorage.getItem('aids'));
 
-    if (!aids) aids = new Array();
+    if (!aids) { aids = new Array(); }
 
-    const connectedUser: User = JSON.parse(localStorage.getItem("userConnected"));
+    const connectedUser: User = JSON.parse(localStorage.getItem('userConnected'));
 
     const currentPosition = await this.geolocation.getCurrentPosition();
-      
+
     const location = new GeoPosition(currentPosition.coords.latitude, currentPosition.coords.longitude);
 
     const aid: Aid = {
@@ -74,16 +74,16 @@ export class AidDescriptionPage implements OnInit {
       location,
       status: Status.CREATED,
       aidType: this.aidType
-    }
+    };
 
     aids.push(aid);
 
-    localStorage.setItem("aids", JSON.stringify(aids));
+    localStorage.setItem('aids', JSON.stringify(aids));
 
     await this.showMessage(this.defaultValidateMessage);
 
-    this.aidText = "";
-    this.router.navigateByUrl("list-current-requests")
+    this.aidText = '';
+    this.router.navigateByUrl('list-current-requests');
   }
 
   async showMessage(message: string) {
@@ -102,7 +102,7 @@ export class AidDescriptionPage implements OnInit {
       this.recording = false;
     });
   }
- 
+
   getPermission() {
     this.speechRecognition.hasPermission()
       .then((hasPermission: boolean) => {
@@ -111,7 +111,7 @@ export class AidDescriptionPage implements OnInit {
         }
       });
   }
- 
+
   startListening() {
     this.speechRecognition.startListening().subscribe(matches => {
       this.updateText(matches[0]);
@@ -122,7 +122,7 @@ export class AidDescriptionPage implements OnInit {
   updateText(text) {
     this.zone.run(() => {
       this.aidText += text;
-    });    
+    });
   }
 
 }
