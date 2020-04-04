@@ -6,46 +6,45 @@
 </ion-header>
 
 <ion-content>
-    <ion-select *ngIf="isSomeData" placeholder="Sélectionner votre type d'aide" [(ngModel)]="selectedAidType" (ionChange)="aidTypeChange()">
-        <ion-select-option value="-1">Toutes les demandes</ion-select-option>
-        <ion-select-option *ngFor="let type of aidTypes" value="{{type}}">{{type | aidTitle}}</ion-select-option>
-<!--        <ion-select-option value="10">Test </ion-select-option>-->
+        <ion-select *ngIf="isSomeData" placeholder="Sélectionner votre type d'aide" [(ngModel)]="selectedAidType" (ionChange)="aidTypeChange()">
+            <ion-select-option value="-1">Toutes les demandes</ion-select-option>
+            <ion-select-option *ngFor="let type of aidTypes" value="{{type}}">{{type | aidTitle}}</ion-select-option>
+    <!--        <ion-select-option value="10">Test </ion-select-option>-->
 
-    </ion-select>
-      <ion-list>
-          <ion-card *ngFor="let aid of displayedAids" class="card">
+        </ion-select>
+        <ion-list>
+            <ion-card *ngFor="let aid of displayedAids" class="card">
 
-              <ion-card-header class="card--header">
-                  <ion-card-title class="header--title">{{aid.aidType | aidTitle}}</ion-card-title>
-                  <ion-card-subtitle class="header--subtitle ion-text-capitalize">Distance: {{aid.location.distance(this.location) | number:'1.1-1'}} km</ion-card-subtitle>
-              </ion-card-header>
+                <ion-card-header class="card--header">
+                    <ion-card-title class="header--title">{{aid.aidType | aidTitle}}</ion-card-title>
+                    <ion-card-subtitle class="header--subtitle ion-text-capitalize">Distance: {{aid.location.distance(this.location) | number:'1.1-1'}} km</ion-card-subtitle>
+                </ion-card-header>
 
-              <ion-card-content class="card--content">
-                  <ion-img class="card--image" src="{{aid.aidType | aidIcon}}"></ion-img>
-                  <p class="card--description">
-                      {{aid.text}}
-                  </p>
-                  <ion-button (click)="takeAid(aid)"  class="card--button ion-text-wrap" fill="outline" color="success">Prendre la demande</ion-button>
-              </ion-card-content>
+                <ion-card-content class="card--content">
+                    <ion-img class="card--image" src="{{aid.aidType | aidIcon}}"></ion-img>
+                    <p class="card--description">
+                        {{aid.text}}
+                    </p>
+                    <ion-button (click)="takeAid(aid)"  class="card--button ion-text-wrap" fill="outline" color="success">Prendre la demande</ion-button>
+                </ion-card-content>
 
-          </ion-card>
+            </ion-card>
 
-    <!--      <ion-item *ngFor="let aid of aids" class="item">-->
-    <!--          <ion-chip outline class="item&#45;&#45;chip">-->
-    <!--              {{aid.aidType | titlecase}}-->
-    <!--          </ion-chip>-->
-    <!--          <ion-label>-->
-    <!--              <h2>{{aid.seniorUser.username}}</h2>-->
-    <!--              <p>{{aid.text | textDescription:5}}</p>-->
-    <!--          </ion-label>-->
-    <!--          <ion-button (click)="takeAid(aid)" color="success" fill="outline" class="item&#45;&#45;button ion-text-wrap" slot="end">-->
-    <!--              Prendre-->
-    <!--              la course-->
-    <!--          </ion-button>-->
-    <!--      </ion-item>-->
+        <!--      <ion-item *ngFor="let aid of aids" class="item">-->
+        <!--          <ion-chip outline class="item&#45;&#45;chip">-->
+        <!--              {{aid.aidType | titlecase}}-->
+        <!--          </ion-chip>-->
+        <!--          <ion-label>-->
+        <!--              <h2>{{aid.seniorUser.username}}</h2>-->
+        <!--              <p>{{aid.text | textDescription:5}}</p>-->
+        <!--          </ion-label>-->
+        <!--          <ion-button (click)="takeAid(aid)" color="success" fill="outline" class="item&#45;&#45;button ion-text-wrap" slot="end">-->
+        <!--              Prendre-->
+        <!--              la course-->
+        <!--          </ion-button>-->
+        <!--      </ion-item>-->
 
-      </ion-list>
+        </ion-list>
 
-    <ion-title *ngIf="!isSomeData" class="no-data-title">Aucune demande pour l'instant, <br> reviens plus tard ...</ion-title>
-
+        <ion-title *ngIf="!isSomeData" class="no-data-title">Aucune demande pour l'instant, <br> reviens plus tard ...</ion-title>
 </ion-content>
