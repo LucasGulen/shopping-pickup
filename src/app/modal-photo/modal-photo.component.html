@@ -10,8 +10,20 @@
 
 <ion-content>
   <div class="center-content">
-    <ion-button (click)="loadFromGallery()">Charger depuis la gallerie</ion-button>
-    <ion-button (click)="takePhoto()">Prendre une photo</ion-button>
+    <ion-button (click)="loadFromGallery();" class="ion-button" style="margin-bottom: 5%">
+      <div style="width: 60px; margin-right:15px">
+        <ion-icon size="large" name="image"></ion-icon>
+      </div>
+      Charger depuis<br>la gallerie
+    </ion-button>
+
+    <ion-button (click)="takePhoto();" class="ion-button" style="margin-bottom: 5%">
+      <div style="width: 60px; margin-right:15px">
+        <ion-icon size="large" name="camera"></ion-icon>
+      </div>
+      Prendre une photo
+    </ion-button>
+
     <ion-img *ngIf="photo !== ''" [src]="photo"></ion-img>
     <ion-button *ngIf="photo !== ''" (click)="dismiss()">Valider la photo</ion-button>
   </div>

@@ -11,8 +11,8 @@
 <ion-content>
   <div class="center-content">
     <ion-button *ngFor="let service of services" (click)="onSelect(service);" class="ion-button" style="margin-bottom: 5%">
-      <div style="width: 60px;">
-        <ion-img style="width: 100%; margin-left: -20px;" src="{{service | aidIcon}}"></ion-img>
+      <div style="width: 60px; margin-right:15px">
+        <ion-img style="width: 100%;" src="{{service | aidIcon}}"></ion-img>
       </div>
       {{service | aidTitle}}
     </ion-button>
