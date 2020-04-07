@@ -26,7 +26,8 @@ export class ListCurrentRequestsPage implements OnInit {
     defaultValidateMessage = '';
     isSomeData = false;
 
-    constructor(private auth: AuthService, private router: Router, private alertController: AlertController, private tts: TextToSpeech) {}
+    constructor(private auth: AuthService, private router: Router, private alertController: AlertController, private tts: TextToSpeech) { }
+    
     ngOnInit() {
     }
 
@@ -147,11 +148,11 @@ export class ListCurrentRequestsPage implements OnInit {
     onInformationPressed() {
         this.tts.speak({
             text: "Sur cette page vous pouvez voir vos demandes en cours." +
-            "Sur chaque élément, vous pouvez voir le type de la demande grâce à son icone" + 
-            ", la description que vous lui avez écrit et le statut actuel. Si vous voyez le statut créé" + 
-            ", cela veut dire que votre demande attend toujours que quelqu'un l'accepte. Si vous voyez le statut acceptée," +
-            " alors quelqu'un l'a déjà accepté et sa réalisation est en cours. Si vous voyez le statut A payer, alors la demande " + 
-            "a été finie et vous devez rembourser les éventuels frais à la personne qui vous a aidé. Pour cela, veuillez appuyer sur le bouton Payer",
+                "Sur chaque élément, vous pouvez voir le type de la demande grâce à son icone" +
+                ", la description que vous lui avez écrit et le statut actuel. Si vous voyez le statut créé" +
+                ", cela veut dire que votre demande attend toujours que quelqu'un l'accepte. Si vous voyez le statut acceptée," +
+                " alors quelqu'un l'a déjà accepté et sa réalisation est en cours. Si vous voyez le statut A payer, alors la demande " +
+                "a été finie et vous devez rembourser les éventuels frais à la personne qui vous a aidé. Pour cela, veuillez appuyer sur le bouton Payer",
             locale: 'fr-FR',
         }).then(_ => console.log("Finished")).catch(_ => console.log("Error"));
     }
