@@ -23,6 +23,7 @@ export class ListCurrentRequestsPage implements OnInit {
     seniorUser: User;
     aids: Array<Aid>;
     defaultValidateMessage = '';
+    isSomeData = false;
 
     constructor(private auth: AuthService, private router: Router, private alertController: AlertController) { }
 
@@ -38,6 +39,7 @@ export class ListCurrentRequestsPage implements OnInit {
         } else {
             // this.setDefaultStaticAidRequests();
         }
+        this.checkDataExist();
     }
 
     setDefaultStaticAidRequests() {
@@ -71,6 +73,10 @@ export class ListCurrentRequestsPage implements OnInit {
             }
     ];
         this.sortAidList();
+    }
+
+    checkDataExist() {
+        this.isSomeData = this.aids.length !== 0;
     }
 
     doLogout() {
