@@ -6,6 +6,7 @@ import {Geolocation} from '@ionic-native/geolocation/ngx';
 import {AlertController, ModalController, ToastController} from "@ionic/angular";
 import {ModalPhotoComponent} from "../modal-photo/modal-photo.component";
 import {Status} from "../interfaces/Status";
+import {User} from "../interfaces/User";
 
 @Component({
     selector: 'app-demande-details-livreur',
