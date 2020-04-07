@@ -1,11 +1,27 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>Détails de la demande</ion-title>
-  </ion-toolbar>
+    <ion-toolbar color="primary" class="toolbar">
+        <ion-title>Détails de la demande</ion-title>
+    </ion-toolbar>
 </ion-header>
 
 <ion-content>
+    <div class="center-content">
+        <ion-card>
+            <ion-card-header>
+                <ion-card-title>Demande faite par {{aid.seniorUser.username}}</ion-card-title>
+                <ion-card-subtitle style="font-style: italic">Téléphone : {{aid.seniorUser.phone}}</ion-card-subtitle>
+                <ion-card-subtitle style="font-style: italic">Distance : {{aid.location.distance(this.location) | number:'1.1-1'}} km</ion-card-subtitle>
 
+            </ion-card-header>
 
+            <ion-card-content>
+                <ion-label class="details-label" position="floating">Description :</ion-label>
+                <ion-textarea style="height: 125px;" readonly autoGrow>{{aid.text}}</ion-textarea>
+                <div *ngIf="alreadyAccepted" class="accepted-label">Accepté</div>
+            </ion-card-content>
+        </ion-card>
 
+        <ion-button *ngIf="!alreadyAccepted" (click)="takeAid(aid)">Accepter</ion-button>
+        <ion-button *ngIf="alreadyAccepted" (click)="showAlert()">Clôturer la demande</ion-button>
+    </div>
 </ion-content>

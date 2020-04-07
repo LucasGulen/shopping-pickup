@@ -13,10 +13,11 @@ import { Geolocation } from '@ionic-native/geolocation/ngx';
 import {PipesModule} from './pipes/pipes.module';
 import {AidTitlePipe} from './pipes/aid-title.pipe';
 import { CardIO } from '@ionic-native/card-io/ngx';
+import {ModalPhotoComponent} from './modal-photo/modal-photo.component';
 
 @NgModule({
-  declarations: [AppComponent],
-  entryComponents: [],
+  declarations: [AppComponent, ModalPhotoComponent],
+  entryComponents: [ModalPhotoComponent],
   imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, PipesModule],
   providers: [
     StatusBar,

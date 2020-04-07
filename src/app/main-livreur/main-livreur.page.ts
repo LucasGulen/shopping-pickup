@@ -65,9 +65,10 @@ export class MainLivreurPage implements OnInit {
         } else {
             storageAids.forEach( aid => aid.location = new GeoPosition(aid.location.latitude, aid.location.longitude))
             this.aids = storageAids;
+            console.log(this.aids);
         }
         this.sortArrayByLocation(this.aids);
-        this.aids = this.filterArrayByStatus(this.aids);
+        this.checkDataExist();
         this.displayedAids = this.aids;
     }
 
@@ -80,14 +81,12 @@ export class MainLivreurPage implements OnInit {
         // this.sortArrayByLocation()
     }
 
-    filterArrayByStatus(arr: Array<Aid>) {
-        arr = arr.filter( aid => aid.status !== Status.ACCEPTED);
-        if (arr.length === 0) {
+    checkDataExist() {
+        if (this.aids.length === 0) {
             this.isSomeData = false;
         } else {
             this.isSomeData = true;
         }
-        return arr;
     }
 
     showDetails(aid: Aid) {
@@ -97,48 +96,11 @@ export class MainLivreurPage implements OnInit {
     getNavigationExtras(aid: Aid): NavigationExtras {
         return {
             queryParams: {
-                aid: JSON.stringify(aid)
+                aid: JSON.stringify(aid),
+                aids: JSON.stringify(this.aids)
             }
         };
     }
-
-    /*
-    async takeAid(aid: Aid) {
-        const alert = await this.alertCtrl.create({
-            header: 'Aider quelqu\'un',
-            message: 'Vous-êtes sur le point d\'aider <strong>' + aid.seniorUser.username + '</strong>. Veuillez suivre les recommandations d\'hygiène !',
-            buttons: [
-                {
-                    text: 'Je ne suis qu\'un méchant',
-                    role: 'cancel',
-                    cssClass: 'secondary',
-                }, {
-                    text: 'Je suis sur de ce que je fais',
-                    cssClass: 'success',
-                    handler: async _ => {
-                        const toast = await this.toastCtrl.create({
-                            duration: 2000,
-                            header: 'Vous avez décidé d\'aider ' + aid.seniorUser.username,
-                            message: 'Merci pour votre aide !',
-                        });
-                        toast.present();
-                        //
-                        aid.aidUser = JSON.parse(localStorage.getItem('userConnected'));
-                        localStorage.setItem('notificationAid', JSON.stringify(aid));
-                        this.aids[this.aids.indexOf(aid)].status = Status.ACCEPTED;
-                        localStorage.setItem('aids', JSON.stringify(this.aids));
-                        this.aids = this.filterArrayByStatus(this.aids);
-                        this.displayedAids = this.aids;
-                        //
-                        // this.aids.splice(this.aids.indexOf(aid), 1);
-                        this.aidTypeChange();
-                    }
-                }
-            ]
-        });
-        alert.present();
-    }
-    */
 
     sortArrayByLocation(arr: Array<Aid>) {
         arr.sort((aid1, aid2) =>

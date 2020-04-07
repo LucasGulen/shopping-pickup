@@ -76,8 +76,10 @@ export class AidDescriptionPage implements OnInit {
 
         const location = new GeoPosition(currentPosition.coords.latitude, currentPosition.coords.longitude);
 
+        const uniqueId = this.getNewId();
+
         const aid: Aid = {
-            id: 10,
+            id: uniqueId,
             text: this.aidText,
             seniorUser: connectedUser,
             aidUser: null,
@@ -94,6 +96,21 @@ export class AidDescriptionPage implements OnInit {
 
         this.aidText = '';
         this.router.navigateByUrl('list-current-requests');
+    }
+
+    getNewId(): number {
+        const tmpAids: Array<Aid> = JSON.parse(localStorage.getItem('aids'));
+        let maxId = -1;
+        if (tmpAids !== null) {
+            tmpAids.forEach( currAid => {
+                if (currAid.id > maxId) {
+                    maxId = currAid.id;
+                }
+            });
+            return maxId + 1;
+        } else {
+            return 1;
+        }
     }
 
     async showMessage(message: string) {

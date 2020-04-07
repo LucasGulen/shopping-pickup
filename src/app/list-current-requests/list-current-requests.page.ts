@@ -28,7 +28,6 @@ export class ListCurrentRequestsPage implements OnInit {
         this.seniorUser = JSON.parse(localStorage.getItem('userConnected'));
         const tmpAids: Array<Aid> = JSON.parse(localStorage.getItem('aids'));
         // Try to load local storage aids list, otherwise load some static data to show something
-        console.log(tmpAids);
         if (tmpAids == null) {
             this.setDefaultStaticAidRequests();
         } else {
