@@ -1,0 +1,45 @@
+ion-content {
+  --background: #f2efea;
+}
+
+ion-item {
+  --background: #f2efea;
+}
+
+.center-content {
+  --background: #f2efea;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+ion-toolbar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+ion-card {
+  height: 50%;
+  width: 80%;
+}
+
+.accepted-label {
+  color: #60c32d;
+  display: flex;
+  justify-content: center
+}
+
+.details-label {
+  border-style: solid;
+  border-width: 0 0 1px 0;
+  font-size: 18px;
+}
+
+.toast-center{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

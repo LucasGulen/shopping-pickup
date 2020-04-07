@@ -17,11 +17,11 @@ ion-input{
 }
 
 .toolbar--logout{
-  float: right;
   height: 35px;
   width: 35px;
   margin: 10px 10px 10px 0;
 }
+
 
 .center-content{
   height: 100%;
@@ -29,4 +29,5 @@ ion-input{
   justify-content: center;
   align-items: center;
   flex-direction: column;
+  background: #f2efea;
 }

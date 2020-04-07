@@ -6,6 +6,8 @@ import {GeoPosition} from '../interfaces/GeoPosition';
 import {Geolocation} from '@ionic-native/geolocation/ngx';
 import {AlertController, ToastController} from '@ionic/angular';
 import {AuthService} from '../providers/auth.service';
+import {NavigationExtras, Router} from "@angular/router";
+import {stringify} from "querystring";
 
 @Component({
     selector: 'app-main-livreur',
@@ -20,8 +22,14 @@ export class MainLivreurPage implements OnInit {
     private isSomeData = false;
     private aidTypes: Array<number> = [];
     private selectedAidType = -1;
+    private connectedUser: User;
 
-    constructor(private geolocation: Geolocation, private toastCtrl: ToastController, private alertCtrl: AlertController, private auth: AuthService) {
+    constructor(private geolocation: Geolocation,
+                private toastCtrl: ToastController,
+                private alertCtrl: AlertController,
+                private auth: AuthService,
+                private router: Router) {
+        this.connectedUser = JSON.parse(localStorage.getItem('userConnected'));
     }
 
     async ngOnInit() {
@@ -35,7 +43,7 @@ export class MainLivreurPage implements OnInit {
 
 
     populateData() {
-        const storageAids: Array<Aid> = JSON.parse(localStorage.getItem('aids'));
+        let storageAids: Array<Aid> = JSON.parse(localStorage.getItem('aids'));
         if (storageAids === null) {
             for (let i = 0; i < 10; i++) {
 
@@ -61,11 +69,15 @@ export class MainLivreurPage implements OnInit {
                 this.aids.push(aid);
             }
         } else {
-            storageAids.forEach( aid => aid.location = new GeoPosition(aid.location.latitude, aid.location.longitude))
+            storageAids.forEach( aid => {
+                aid.location = new GeoPosition(aid.location.latitude, aid.location.longitude);
+            });
+            storageAids = storageAids.filter(currAid => currAid.aidUser == this.connectedUser || currAid.aidUser == null);
             this.aids = storageAids;
+            console.log(this.aids);
         }
         this.sortArrayByLocation(this.aids);
-        this.aids = this.filterArrayByStatus(this.aids);
+        this.checkDataExist();
         this.displayedAids = this.aids;
     }
 
@@ -78,50 +90,25 @@ export class MainLivreurPage implements OnInit {
         // this.sortArrayByLocation()
     }
 
-    filterArrayByStatus(arr: Array<Aid>) {
-        arr = arr.filter( aid => aid.status !== Status.ACCEPTED);
-        if (arr.length === 0) {
+    checkDataExist() {
+        if (this.aids.length === 0) {
             this.isSomeData = false;
         } else {
             this.isSomeData = true;
         }
-        return arr;
     }
 
-    async takeAid(aid: Aid) {
-        const alert = await this.alertCtrl.create({
-            header: 'Aider quelqu\'un',
-            message: 'Vous-êtes sur le point d\'aider <strong>' + aid.seniorUser.username + '</strong>. Veuillez suivre les recommandations d\'hygiène !',
-            buttons: [
-                {
-                    text: 'Je ne suis qu\'un méchant',
-                    role: 'cancel',
-                    cssClass: 'secondary',
-                }, {
-                    text: 'Je suis sur de ce que je fais',
-                    cssClass: 'success',
-                    handler: async _ => {
-                        const toast = await this.toastCtrl.create({
-                            duration: 2000,
-                            header: 'Vous avez décidé d\'aider ' + aid.seniorUser.username,
-                            message: 'Merci pour votre aide !',
-                        });
-                        toast.present();
-                        //
-                        aid.aidUser = JSON.parse(localStorage.getItem('userConnected'));
-                        localStorage.setItem('notificationAid', JSON.stringify(aid));
-                        this.aids[this.aids.indexOf(aid)].status = Status.ACCEPTED;
-                        localStorage.setItem('aids', JSON.stringify(this.aids));
-                        this.aids = this.filterArrayByStatus(this.aids);
-                        this.displayedAids = this.aids;
-                        //
-                        // this.aids.splice(this.aids.indexOf(aid), 1);
-                        this.aidTypeChange();
-                    }
-                }
-            ]
-        });
-        alert.present();
+    showDetails(aid: Aid) {
+        this.router.navigate(['demande-details-livreur'], this.getNavigationExtras(aid));
+    }
+
+    getNavigationExtras(aid: Aid): NavigationExtras {
+        return {
+            queryParams: {
+                aid: JSON.stringify(aid),
+                aids: JSON.stringify(this.aids)
+            }
+        };
     }
 
     sortArrayByLocation(arr: Array<Aid>) {

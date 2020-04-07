@@ -42,8 +42,19 @@
 }
 
 .toolbar--logout{
-  float: right;
   height: 35px;
   width: 35px;
   margin: 10px 10px 10px 0;
+}
+
+.center-content {
+  background: #f2efea;
+}
+
+ion-content{
+  --background: #f2efea;
+}
+
+ion-list{
+  background: #f2efea;
 }
