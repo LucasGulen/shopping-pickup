@@ -24,10 +24,12 @@
                 </ion-card-header>
 
                 <ion-card-content class="card--content">
-                    <ion-img class="card--image" src="{{aid.aidType | aidIcon}}"></ion-img>
-                    <p class="card--description">
+                    <div style="width: 60px;">
+                        <ion-img class="card--image" src="{{aid.aidType | aidIcon}}"></ion-img>
+                    </div>
+                    <div class="card--description">
                         {{aid.text}}
-                    </p>
+                    </div>
                 </ion-card-content>
 
             </ion-card>
