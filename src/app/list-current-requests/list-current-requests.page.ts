@@ -26,16 +26,11 @@ export class ListCurrentRequestsPage implements OnInit {
     defaultValidateMessage = '';
     isSomeData = false;
 
-<<<<<<< HEAD
-    constructor(private auth: AuthService, private router: Router, private alertController: AlertController, private tts: TextToSpeech) {
-=======
-    constructor(private auth: AuthService, private router: Router, private alertController: AlertController) { }
-
+    constructor(private auth: AuthService, private router: Router, private alertController: AlertController, private tts: TextToSpeech) {}
     ngOnInit() {
     }
 
     ionViewWillEnter() {
->>>>>>> 69073844a153664632644f26324f78ee84219c7b
         this.seniorUser = JSON.parse(localStorage.getItem('userConnected'));
         const tmpAids: Array<Aid> = JSON.parse(localStorage.getItem('aids'));
         // Try to load local storage aids list, otherwise load some static data to show something
