@@ -16,7 +16,7 @@
 
         </ion-select>
         <ion-list>
-            <ion-card (click)="showDetails(aid)" *ngFor="let aid of displayedAids" class="card" [class.is-user]="aid.aidUser != null && aid.aidUser.username == connectedUser.username">
+            <ion-card (click)="showDetails(aid)" *ngFor="let aid of displayedAids" class="card" [(class.is-user)]="aid.aidUser != null && aid.aidUser.username == connectedUser.username">
 
                 <ion-card-header class="card--header">
                     <ion-card-title class="header--title">{{aid.aidType | aidTitle}}</ion-card-title>
