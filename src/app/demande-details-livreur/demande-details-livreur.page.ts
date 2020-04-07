@@ -15,6 +15,7 @@ import {Status} from "../interfaces/Status";
 export class DemandeDetailsLivreurPage implements OnInit {
 
     aid: Aid;
+    userConnected: User;
     alreadyAccepted = false;
     location: GeoPosition = new GeoPosition(-1, -1);
     aids: Array<Aid> = new Array<Aid>();
@@ -25,13 +26,14 @@ export class DemandeDetailsLivreurPage implements OnInit {
                private modalController: ModalController,
                private toastCtrl: ToastController) {
         route.queryParams.subscribe(params => {
+            this.userConnected = JSON.parse(localStorage.getItem('userConnected'));
             this.aid = JSON.parse(params.aid);
             this.aid.location = new GeoPosition(this.aid.location.latitude, this.aid.location.longitude);
             this.aids = JSON.parse(params.aids);
             this.aids.forEach(currAid => {
                 currAid.location = new GeoPosition(currAid.location.latitude, currAid.location.longitude);
             });
-            this.aid.status > 0 ? this.alreadyAccepted = true : this.alreadyAccepted = false;
+            this.aid.status > 0 && this.aid.aidUser.username ==  this.userConnected.username ? this.alreadyAccepted = true : this.alreadyAccepted = false;
         });
     }
 

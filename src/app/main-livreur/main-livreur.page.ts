@@ -22,8 +22,14 @@ export class MainLivreurPage implements OnInit {
     private isSomeData = false;
     private aidTypes: Array<number> = [];
     private selectedAidType = -1;
+    private connectedUser: User;
 
-    constructor(private geolocation: Geolocation, private toastCtrl: ToastController, private alertCtrl: AlertController, private auth: AuthService, private router: Router) {
+    constructor(private geolocation: Geolocation,
+                private toastCtrl: ToastController,
+                private alertCtrl: AlertController,
+                private auth: AuthService,
+                private router: Router) {
+        this.connectedUser = JSON.parse(localStorage.getItem('userConnected'));
     }
 
     async ngOnInit() {
@@ -37,7 +43,7 @@ export class MainLivreurPage implements OnInit {
 
 
     populateData() {
-        const storageAids: Array<Aid> = JSON.parse(localStorage.getItem('aids'));
+        let storageAids: Array<Aid> = JSON.parse(localStorage.getItem('aids'));
         if (storageAids === null) {
             for (let i = 0; i < 10; i++) {
 
@@ -63,7 +69,10 @@ export class MainLivreurPage implements OnInit {
                 this.aids.push(aid);
             }
         } else {
-            storageAids.forEach( aid => aid.location = new GeoPosition(aid.location.latitude, aid.location.longitude))
+            storageAids.forEach( aid => {
+                aid.location = new GeoPosition(aid.location.latitude, aid.location.longitude);
+            });
+            storageAids = storageAids.filter(currAid => currAid.aidUser == this.connectedUser || currAid.aidUser == null);
             this.aids = storageAids;
             console.log(this.aids);
         }
