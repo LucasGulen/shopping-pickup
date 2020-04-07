@@ -3,10 +3,10 @@ import {Aid} from '../interfaces/Aid';
 import {ActivatedRoute, NavigationExtras, Route} from '@angular/router';
 import {GeoPosition} from '../interfaces/GeoPosition';
 import {Geolocation} from '@ionic-native/geolocation/ngx';
-import {AlertController, ModalController, ToastController} from "@ionic/angular";
-import {ModalPhotoComponent} from "../modal-photo/modal-photo.component";
-import {Status} from "../interfaces/Status";
-import {User} from "../interfaces/User";
+import {AlertController, ModalController, ToastController} from '@ionic/angular';
+import {ModalPhotoComponent} from '../modal-photo/modal-photo.component';
+import {Status} from '../interfaces/Status';
+import {User} from '../interfaces/User';
 
 @Component({
     selector: 'app-demande-details-livreur',
@@ -34,7 +34,7 @@ export class DemandeDetailsLivreurPage implements OnInit {
             this.aids.forEach(currAid => {
                 currAid.location = new GeoPosition(currAid.location.latitude, currAid.location.longitude);
             });
-            this.aid.status > 0 && this.aid.aidUser.username ==  this.userConnected.username ? this.alreadyAccepted = true : this.alreadyAccepted = false;
+            this.aid.status > 0 && this.aid.aidUser.username ===  this.userConnected.username ? this.alreadyAccepted = true : this.alreadyAccepted = false;
         });
     }
 
@@ -87,6 +87,7 @@ export class DemandeDetailsLivreurPage implements OnInit {
     async showAlert() {
         const alert = await this.alertController.create({
             header: 'Clôture de la demande',
+            // tslint:disable-next-line:max-line-length
             message: 'Pour pouvoir mettre fin à cette demande, une photo du ticket de caisse ou tout autre preuve de paiement te sera demandée à l\'étape qui suit.',
             buttons: [
                 {

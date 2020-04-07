@@ -62,7 +62,7 @@ export class PaiementPage implements OnInit {
 
   doLogout() {
     this.auth.logout();
-    this.router.navigateByUrl('choix-role');
+    //this.router.navigateByUrl('choix-role');
   }
 
 }
