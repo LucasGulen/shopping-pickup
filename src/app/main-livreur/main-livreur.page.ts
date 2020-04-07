@@ -6,8 +6,8 @@ import {GeoPosition} from '../interfaces/GeoPosition';
 import {Geolocation} from '@ionic-native/geolocation/ngx';
 import {AlertController, ToastController} from '@ionic/angular';
 import {AuthService} from '../providers/auth.service';
-import {NavigationExtras, Router} from "@angular/router";
-import {stringify} from "querystring";
+import {NavigationExtras, Router} from '@angular/router';
+import {User} from '../interfaces/User';
 
 @Component({
     selector: 'app-main-livreur',
@@ -16,7 +16,7 @@ import {stringify} from "querystring";
 })
 export class MainLivreurPage implements OnInit {
 
-    private aids: Array<Aid> = new Array<Aid>();
+    private aids: Array<Aid> = null;
     private displayedAids: Array<Aid> = new Array<Aid>();
     private location: GeoPosition;
     private isSomeData = false;
@@ -43,10 +43,9 @@ export class MainLivreurPage implements OnInit {
 
 
     populateData() {
-        let storageAids: Array<Aid> = JSON.parse(localStorage.getItem('aids'));
-        if (storageAids === null) {
+        this.aids = JSON.parse(localStorage.getItem('aids'));
+        if (this.aids === null) {
             for (let i = 0; i < 10; i++) {
-
                 const aid: Aid = {
                     id: i,
                     text: 'Ceci est la description de la demande.',
@@ -68,17 +67,18 @@ export class MainLivreurPage implements OnInit {
                 }
                 this.aids.push(aid);
             }
+            this.sortArrayByLocation(this.aids);
+            this.displayedAids = this.aids;
         } else {
-            storageAids.forEach( aid => {
+            this.aids.forEach( aid => {
                 aid.location = new GeoPosition(aid.location.latitude, aid.location.longitude);
             });
-            storageAids = storageAids.filter(currAid => currAid.aidUser == this.connectedUser || currAid.aidUser == null);
-            this.aids = storageAids;
-            console.log(this.aids);
+            console.log(this.aids)
+            this.sortArrayByLocation(this.aids);
+            this.displayedAids = this.aids;
+            this.displayedAids = this.displayedAids.filter(currAid => currAid.aidUser == null || currAid.aidUser.username === this.connectedUser.username );
         }
-        this.sortArrayByLocation(this.aids);
         this.checkDataExist();
-        this.displayedAids = this.aids;
     }
 
     aidTypeChange() {
@@ -91,7 +91,7 @@ export class MainLivreurPage implements OnInit {
     }
 
     checkDataExist() {
-        if (this.aids.length === 0) {
+        if (this.displayedAids.length === 0) {
             this.isSomeData = false;
         } else {
             this.isSomeData = true;

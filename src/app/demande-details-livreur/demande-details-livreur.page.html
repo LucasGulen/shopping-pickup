@@ -1,9 +1,12 @@
 <ion-header>
     <ion-toolbar color="primary" class="toolbar">
-        <ion-title>Détails de la demande</ion-title>
+        <ion-buttons slot="start">
+            <ion-back-button text="Retour"></ion-back-button>
+        </ion-buttons>
+        <ion-title>Détail de la commande</ion-title>
+        <ion-icon slot="end" name="power-outline" class="toolbar--logout" (click)="doLogout()"></ion-icon>
     </ion-toolbar>
 </ion-header>
-
 <ion-content>
     <div class="center-content">
         <ion-card>
