@@ -1,4 +1,4 @@
-import {Component, NgZone, OnInit} from '@angular/core';
+import {Component, NgZone, OnInit, ViewChild} from '@angular/core';
 import {Router, ActivatedRoute} from '@angular/router';
 import {AuthService} from '../providers/auth.service';
 import {AidType} from '../interfaces/AidType';
@@ -18,50 +18,59 @@ import {SpeechRecognition} from '@ionic-native/speech-recognition/ngx';
 })
 export class AidDescriptionPage implements OnInit {
 
-  constructor(private route: ActivatedRoute,
-              private router: Router,
-              private auth: AuthService,
-              private alertController: AlertController,
-              private geolocation: Geolocation,
-              private speechRecognition: SpeechRecognition,
-              private zone: NgZone) { }
+    @ViewChild('textarea') textarea;
 
-  private aidType: AidType;
-  private aidText = '';
+    constructor(private route: ActivatedRoute,
+                private router: Router,
+                private auth: AuthService,
+                private alertController: AlertController,
+                private geolocation: Geolocation,
+                private speechRecognition: SpeechRecognition,
+                private zone: NgZone) {
+    }
 
-  private defaultValidateMessage = 'Votre message a bien été enregistré !';
-  private recording = false;
+    private aidType: AidType;
+    private aidText = '';
 
-  ngOnInit() {
-    this.route.queryParams.subscribe(params => {
-      if (params && params.aidType) {
-        this.aidType = params.aidType;
-      } else {
-        throwError('The aid description page did not receive the correct parameters. params.aidType.');
-      }
-    });
+    private defaultValidateMessage = 'Votre message a bien été enregistré !';
+    private recording = false;
 
-    this.getPermission();
-  }
+    ngOnInit() {
+        this.route.queryParams.subscribe(params => {
+            if (params && params.aidType) {
+                this.aidType = params.aidType;
+            } else {
+                throwError('The aid description page did not receive the correct parameters. params.aidType.');
+            }
+        });
 
-  doLogout() {
-    this.auth.logout();
-  }
+        this.getPermission();
+    }
 
-  onRecordingSelected() {
-      if (this.recording) {
-          this.stopListening();
-      } else {
-          this.startListening();
-      }
-  }
+    focusTextarea() {
+        this.textarea.setFocus();
+    }
+
+    doLogout() {
+        this.auth.logout();
+    }
+
+    onRecordingSelected() {
+        if (this.recording) {
+            this.stopListening();
+        } else {
+            this.startListening();
+        }
+    }
 
     async onValidateSelected() {
-        let aids: Array<Aid> = JSON.parse(localStorage.getItem("aids"));
+        let aids: Array<Aid> = JSON.parse(localStorage.getItem('aids'));
 
-        if (!aids) { aids = new Array(); }
+        if (!aids) {
+            aids = new Array();
+        }
 
-        const connectedUser: User = JSON.parse(localStorage.getItem("userConnected"));
+        const connectedUser: User = JSON.parse(localStorage.getItem('userConnected'));
 
         const currentPosition = await this.geolocation.getCurrentPosition();
 
@@ -75,16 +84,16 @@ export class AidDescriptionPage implements OnInit {
             location,
             status: Status.CREATED,
             aidType: this.aidType
-        }
+        };
 
         aids.push(aid);
 
-        localStorage.setItem("aids", JSON.stringify(aids));
+        localStorage.setItem('aids', JSON.stringify(aids));
 
         await this.showMessage(this.defaultValidateMessage);
 
-        this.aidText = "";
-        this.router.navigateByUrl("list-current-requests")
+        this.aidText = '';
+        this.router.navigateByUrl('list-current-requests');
     }
 
     async showMessage(message: string) {

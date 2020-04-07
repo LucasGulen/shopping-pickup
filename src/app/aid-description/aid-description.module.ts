@@ -7,14 +7,16 @@ import { IonicModule } from '@ionic/angular';
 import { AidDescriptionPageRoutingModule } from './aid-description-routing.module';
 
 import { AidDescriptionPage } from './aid-description.page';
+import {PipesModule} from '../pipes/pipes.module';
 
 @NgModule({
-  imports: [
-    CommonModule,
-    FormsModule,
-    IonicModule,
-    AidDescriptionPageRoutingModule
-  ],
+    imports: [
+        CommonModule,
+        FormsModule,
+        IonicModule,
+        AidDescriptionPageRoutingModule,
+        PipesModule
+    ],
   declarations: [AidDescriptionPage]
 })
 export class AidDescriptionPageModule { }

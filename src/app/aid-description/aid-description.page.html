@@ -1,17 +1,17 @@
 <ion-header>
     <ion-toolbar color="primary" class="toolbar">
-        <ion-title>Services</ion-title>
+        <ion-title>{{this.aidType | aidTitle}}</ion-title>
         <ion-icon slot="end" name="power-outline" class="toolbar--logout" (click)="doLogout()"></ion-icon>
     </ion-toolbar>
 </ion-header>
 
 <ion-content>
   <div class="center-content">
-  <ion-item class="notes">
+  <ion-item class="notes" (click)="focusTextarea()">
       <ion-label position="floating">Notes</ion-label>
-      <ion-textarea [(ngModel)]="aidText" autoGrow></ion-textarea>
+      <ion-textarea #textarea id="textarea" [(ngModel)]="aidText" autoGrow></ion-textarea>
     </ion-item>
-    <ion-button (click)="onRecordingSelected();" class="ion-button" style="margin-bottom: 2%">Enregistrer</ion-button>
-    <ion-button (click)="onValidateSelected()" class="ion-button">Valider</ion-button>
+    <ion-button (click)="onRecordingSelected();" class="ion-button" style="margin-bottom: 2%">Enregistrer sa voix</ion-button>
+    <ion-button (click)="onValidateSelected()" class="ion-button">Valider la demande</ion-button>
   </div>
 </ion-content>
