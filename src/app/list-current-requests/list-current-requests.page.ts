@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {AuthService} from '../providers/auth.service';
 import {Status} from '../interfaces/Status';
-import {Router} from '@angular/router';
+import {NavigationExtras, Router} from '@angular/router';
 import {AlertController} from '@ionic/angular';
 import {Aid} from '../interfaces/Aid';
 import {User} from '../interfaces/User';
@@ -81,8 +81,8 @@ export class ListCurrentRequestsPage implements OnInit {
         return statusNumber === Status.DELIVERED;
     }
 
-    async goToPayment(elem) {
-        await this.askConfirmation(this.defaultValidateMessage, elem.el);
+    async goToPayment(elem, aid: Aid) {
+        await this.askConfirmation(this.defaultValidateMessage, elem.el, aid);
     }
 
     getStatusName(statusNumber: number) {
@@ -97,7 +97,7 @@ export class ListCurrentRequestsPage implements OnInit {
         }
     }
 
-    async askConfirmation(message: string, elem) {
+    async askConfirmation(message: string, elem, aid: Aid) {
         const alert = await this.alertController.create({
             header: 'Validation avant paiement',
             message: 'En acceptant, tu valides avoir bien reçu la livraison et tu pourras passer à l\'étape de paiement de ta commande',
@@ -113,13 +113,21 @@ export class ListCurrentRequestsPage implements OnInit {
                 }, {
                     text: 'Accepter',
                     handler: () => {
-                        this.router.navigateByUrl('paiement');
+                        this.router.navigate(['paiement'], this.getNavigationExtras(aid));
                     }
                 }
             ]
         });
         await alert.present();
         return alert.onDidDismiss();
+    }
+
+    getNavigationExtras(aid: Aid): NavigationExtras {
+        return {
+            queryParams: {
+                aid: JSON.stringify(aid)
+            }
+        };
     }
 
     async showPhoneNumberAid(aideUserPhone: string) {

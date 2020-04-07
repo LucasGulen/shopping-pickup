@@ -17,7 +17,7 @@
           <ion-card-header style="display: flex;justify-content: space-between;align-items: center;">
             <div style="color: black;text-decoration: underline;">{{aid.aidType | aidTitle}}</div>
             <div *ngIf="isPaymentNeeded(aid.status)">
-              <ion-button (click)="goToPayment(aidElem)" class="btn-to-paiement">{{getStatusName(aid.status)}}</ion-button>
+              <ion-button (click)="goToPayment(aidElem, aid)" class="btn-to-paiement">{{getStatusName(aid.status)}}</ion-button>
             </div>
             <div *ngIf="!isPaymentNeeded(aid.status)" style="text-align: center;font-style: italic;">
               {{getStatusName(aid.status)}}

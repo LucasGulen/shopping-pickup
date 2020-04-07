@@ -2,9 +2,13 @@ import { Component, OnInit } from '@angular/core';
 
 import { CardIO, CardIOResponse } from '@ionic-native/card-io/ngx';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { AlertController } from '@ionic/angular';
+import {AlertController, LoadingController} from '@ionic/angular';
 import { AuthService } from '../providers/auth.service';
-import { Router } from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
+import {throwError} from 'rxjs';
+import {Aid} from '../interfaces/Aid';
+import {GeoPosition} from '../interfaces/GeoPosition';
+import {Storage} from '@ionic/storage';
 
 @Component({
   selector: 'app-paiement',
@@ -13,10 +17,18 @@ import { Router } from '@angular/router';
 })
 export class PaiementPage implements OnInit {
 
-  private card = {cardNumber: null, expiry: null, cvv: null, cardHolderName: '', cardType: ''}
+  private card = {cardNumber: null, expiry: null, cvv: null, cardHolderName: '', cardType: ''};
+  private photo = '';
+  private aid: Aid;
   userForm: FormGroup;
 
-  constructor(private cardIO: CardIO, private alertController: AlertController, private auth: AuthService,  private router: Router) {
+  constructor(private cardIO: CardIO,
+              private alertController: AlertController,
+              private auth: AuthService,
+              private router: Router,
+              private route: ActivatedRoute,
+              private storage: Storage,
+              private loadingCtrl: LoadingController) {
     this.userForm = new FormGroup({
       cardNumber: new FormControl('', Validators.required),
       expiry: new FormControl('', Validators.required),
@@ -26,15 +38,32 @@ export class PaiementPage implements OnInit {
     });
    }
 
-  ngOnInit() {
-  }
+   ngOnInit(): void {
+   }
+
+  async ionViewWillEnter() {
+    const loader = await this.loadingCtrl.create();
+    loader.present();
+    this.route.queryParams.subscribe(async params => {
+      if (params && params.aid) {
+        this.aid = JSON.parse(params.aid);
+        this.aid.location = new GeoPosition(this.aid.location.latitude, this.aid.location.longitude);
+        const photos = await this.storage.get('photos');
+        this.photo = photos[this.aid.photo];
+        loader.dismiss();
+      } else {
+        throwError('The aid description page did not receive the correct parameters. params.aidType.');
+        loader.dismiss();
+      }
+    });
+   }
 
   onScanningSelected() {
     this.cardIO.canScan()
       .then(
         (res: boolean) => {
           if (res) {
-            let options = {
+            const options = {
               requireExpiry: true,
               requireCVV: true,
               requirePostalCode: false,
@@ -42,7 +71,7 @@ export class PaiementPage implements OnInit {
               requireCardholderName: true
             };
             this.cardIO.scan(options).then((cardResponse: CardIOResponse) => {
-              this.payer("Paiement effectué !");
+              this.payer('Paiement effectué !');
             });
           }
         }
@@ -62,7 +91,7 @@ export class PaiementPage implements OnInit {
 
   doLogout() {
     this.auth.logout();
-    //this.router.navigateByUrl('choix-role');
+    // this.router.navigateByUrl('choix-role');
   }
 
 }
