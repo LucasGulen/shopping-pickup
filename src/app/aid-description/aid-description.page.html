@@ -14,7 +14,10 @@
       <ion-label position="floating">Notes</ion-label>
       <ion-textarea #textarea id="textarea" [(ngModel)]="aidText" autoGrow></ion-textarea>
     </ion-item>
-    <ion-button (click)="onRecordingSelected();" class="ion-button" style="margin-bottom: 2%">Enregistrer sa voix</ion-button>
+    <ion-button (click)="onRecordingSelected();" class="ion-button" style="margin-bottom: 2%"><div style="width: 60px;">
+      <!--<ion-img style="width: 100%; margin-left: -20px;" src="{{service | aidIcon}}"></ion-img>-->
+      <ion-icon size="large" style="margin-left: -50px;" name="mic"></ion-icon>
+    </div>Enregistrer sa voix</ion-button>
     <ion-button (click)="onValidateSelected()" class="ion-button">Valider la demande</ion-button>
   </div>
 </ion-content>

@@ -20,6 +20,7 @@ export class ListServicesSeniorPage implements OnInit {
     const keys = Object.keys(AidType);
     // tslint:disable-next-line:radix
     this.services = keys.splice(0, keys.length / 2).map((id) => parseInt(id));
+    console.log(this.services)
   }
 
   doLogout() {
