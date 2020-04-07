@@ -4,6 +4,8 @@ import {AuthService} from '../providers/auth.service';
 import {AlertController} from '@ionic/angular';
 import {Aid} from '../interfaces/Aid';
 import {User} from '../interfaces/User';
+import { TextToSpeech } from '@ionic-native/text-to-speech/ngx';
+
 
 @Component({
   selector: 'app-choix-role',
@@ -12,7 +14,7 @@ import {User} from '../interfaces/User';
 })
 export class ChoixRolePage implements OnInit {
 
-  constructor(private router: Router, private auth: AuthService, private alertController: AlertController) { }
+  constructor(private router: Router, private auth: AuthService, private alertController: AlertController, private tts: TextToSpeech) { }
 
   role;
 
@@ -85,5 +87,13 @@ export class ChoixRolePage implements OnInit {
 */
   doLogout() {
     this.auth.logout();
+  }
+
+  onInformationPressed() {
+    this.tts.speak({
+      text: 'Dans cette page vous pouvez choisir votre rôle. Appuyez sur le premier bouton si vous avez besoin d\'aide. ' +
+      'Appuyez sur le deuxième bouton si vous souhaitez aider quelqu\'un.',
+      locale: 'fr-FR',
+    }).then(_ => console.log("Finished")).catch(_ => console.log("Error"));
   }
 }

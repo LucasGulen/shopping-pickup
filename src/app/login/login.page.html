@@ -10,4 +10,12 @@
     <ion-input formControlName="phone" [(ngModel)]="user.phone" placeholder="Entrez votre numéro de téléphone" type="tel"></ion-input>
     <ion-button [disabled]="!userForm.valid" (click)="saveUser()">se connecter</ion-button>
   </form>
+
+
+   <!-- fab placed to the (vertical) center and end -->
+   <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button (click)="onInformationPressed()">
+      <ion-icon name="information-circle-outline"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
 </ion-content>

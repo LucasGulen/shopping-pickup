@@ -7,6 +7,7 @@ import { IonicModule } from '@ionic/angular';
 import { DemandeDetailsLivreurPageRoutingModule } from './demande-details-livreur-routing.module';
 
 import { DemandeDetailsLivreurPage } from './demande-details-livreur.page';
+import {IonicStorageModule} from '@ionic/storage';
 
 @NgModule({
   imports: [

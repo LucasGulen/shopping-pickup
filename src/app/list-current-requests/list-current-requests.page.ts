@@ -1,12 +1,13 @@
 import {Component, OnInit} from '@angular/core';
 import {AuthService} from '../providers/auth.service';
 import {Status} from '../interfaces/Status';
-import {Router} from '@angular/router';
+import {NavigationExtras, Router} from '@angular/router';
 import {AlertController} from '@ionic/angular';
 import {Aid} from '../interfaces/Aid';
 import {User} from '../interfaces/User';
 import {GeoPosition} from '../interfaces/GeoPosition';
 import {AidType} from '../interfaces/AidType';
+import { TextToSpeech } from '@ionic-native/text-to-speech/ngx';
 
 @Component({
     selector: 'app-list-current-requests',
@@ -23,19 +24,23 @@ export class ListCurrentRequestsPage implements OnInit {
     seniorUser: User;
     aids: Array<Aid>;
     defaultValidateMessage = '';
+    isSomeData = false;
 
-    constructor(private auth: AuthService, private router: Router, private alertController: AlertController) {
+    constructor(private auth: AuthService, private router: Router, private alertController: AlertController, private tts: TextToSpeech) { }
+    
+    ngOnInit() {
+    }
+
+    ionViewWillEnter() {
         this.seniorUser = JSON.parse(localStorage.getItem('userConnected'));
         const tmpAids: Array<Aid> = JSON.parse(localStorage.getItem('aids'));
         // Try to load local storage aids list, otherwise load some static data to show something
-        if (tmpAids == null) {
-            this.setDefaultStaticAidRequests();
+        if (tmpAids !== null) {
+            this.aids = tmpAids.filter(currAid => currAid.seniorUser.username == this.seniorUser.username);
         } else {
-            this.aids = tmpAids;
+            // this.setDefaultStaticAidRequests();
         }
-    }
-
-    ngOnInit() {
+        this.checkDataExist();
     }
 
     setDefaultStaticAidRequests() {
@@ -67,8 +72,12 @@ export class ListCurrentRequestsPage implements OnInit {
                 status: Status.CREATED,
                 aidType: AidType.IT
             }
-    ];
+        ];
         this.sortAidList();
+    }
+
+    checkDataExist() {
+        this.isSomeData = this.aids.length !== 0;
     }
 
     doLogout() {
@@ -79,8 +88,8 @@ export class ListCurrentRequestsPage implements OnInit {
         return statusNumber === Status.DELIVERED;
     }
 
-    async goToPayment(elem) {
-        await this.askConfirmation(this.defaultValidateMessage, elem.el);
+    async goToPayment(elem, aid: Aid) {
+        await this.askConfirmation(this.defaultValidateMessage, elem.el, aid);
     }
 
     getStatusName(statusNumber: number) {
@@ -95,7 +104,7 @@ export class ListCurrentRequestsPage implements OnInit {
         }
     }
 
-    async askConfirmation(message: string, elem) {
+    async askConfirmation(message: string, elem, aid: Aid) {
         const alert = await this.alertController.create({
             header: 'Validation avant paiement',
             message: 'En acceptant, tu valides avoir bien reçu la livraison et tu pourras passer à l\'étape de paiement de ta commande',
@@ -111,13 +120,21 @@ export class ListCurrentRequestsPage implements OnInit {
                 }, {
                     text: 'Accepter',
                     handler: () => {
-                        this.router.navigateByUrl('paiement');
+                        this.router.navigate(['paiement'], this.getNavigationExtras(aid));
                     }
                 }
             ]
         });
         await alert.present();
         return alert.onDidDismiss();
+    }
+
+    getNavigationExtras(aid: Aid): NavigationExtras {
+        return {
+            queryParams: {
+                aid: JSON.stringify(aid)
+            }
+        };
     }
 
     async showPhoneNumberAid(aideUserPhone: string) {
@@ -133,6 +150,19 @@ export class ListCurrentRequestsPage implements OnInit {
 
     sortAidList() {
         this.aids = this.aids.sort((aidA, aidB) => aidB.status - aidA.status);
+    }
+
+
+    onInformationPressed() {
+        this.tts.speak({
+            text: "Sur cette page vous pouvez voir vos demandes en cours." +
+                "Sur chaque élément, vous pouvez voir le type de la demande grâce à son icone" +
+                ", la description que vous lui avez écrit et le statut actuel. Si vous voyez le statut créé" +
+                ", cela veut dire que votre demande attend toujours que quelqu'un l'accepte. Si vous voyez le statut acceptée," +
+                " alors quelqu'un l'a déjà accepté et sa réalisation est en cours. Si vous voyez le statut A payer, alors la demande " +
+                "a été finie et vous devez rembourser les éventuels frais à la personne qui vous a aidé. Pour cela, veuillez appuyer sur le bouton Payer",
+            locale: 'fr-FR',
+        }).then(_ => console.log("Finished")).catch(_ => console.log("Error"));
     }
 
 }

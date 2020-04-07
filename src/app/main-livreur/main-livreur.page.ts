@@ -29,10 +29,10 @@ export class MainLivreurPage implements OnInit {
                 private alertCtrl: AlertController,
                 private auth: AuthService,
                 private router: Router) {
-        this.connectedUser = JSON.parse(localStorage.getItem('userConnected'));
     }
 
-    async ngOnInit() {
+    async ionViewWillEnter() {
+        this.connectedUser = JSON.parse(localStorage.getItem('userConnected'));
         const position = await this.geolocation.getCurrentPosition();
         this.location = new GeoPosition(position.coords.latitude, position.coords.longitude);
         this.populateData();
@@ -41,6 +41,7 @@ export class MainLivreurPage implements OnInit {
         this.aidTypes = keys.splice(0, keys.length / 2).map((id) => parseInt(id));
     }
 
+    async ngOnInit() { }
 
     populateData() {
         this.aids = JSON.parse(localStorage.getItem('aids'));

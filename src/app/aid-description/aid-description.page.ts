@@ -10,6 +10,7 @@ import {AlertController} from '@ionic/angular';
 import {Geolocation} from '@ionic-native/geolocation/ngx';
 import {GeoPosition} from '../interfaces/GeoPosition';
 import {SpeechRecognition} from '@ionic-native/speech-recognition/ngx';
+import { TextToSpeech } from '@ionic-native/text-to-speech/ngx';  
 
 @Component({
     selector: 'app-aid-description',
@@ -26,7 +27,8 @@ export class AidDescriptionPage implements OnInit {
                 private alertController: AlertController,
                 private geolocation: Geolocation,
                 private speechRecognition: SpeechRecognition,
-                private zone: NgZone) {
+                private zone: NgZone,
+                private tts: TextToSpeech) {
     }
 
     private aidType: AidType;
@@ -152,4 +154,13 @@ export class AidDescriptionPage implements OnInit {
             this.aidText += text;
         });
     }
+
+    onInformationPressed() {
+        this.tts.speak({
+          text: "Cette page vous permet de détailler votre demande. Appuyez sur le champ 'Notes' pour écrire votre" + 
+          " demande ou appuyez sur le bouton 'Enregistrer sa voix' pour dicter à votre téléphone et il écrira votre " + 
+          "demande pour vous. Enfin, appuyez sur le bouton 'Valider la demande' une fois satisfait de votre description.",
+          locale: 'fr-FR',
+        }).then(_ => console.log("Finished")).catch(_ => console.log("Error"));
+      }
 }
