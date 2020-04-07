@@ -5,6 +5,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { AlertController } from '@ionic/angular';
 import { AuthService } from '../providers/auth.service';
 import { Router } from '@angular/router';
+import { TextToSpeech } from '@ionic-native/text-to-speech/ngx';  
 
 @Component({
   selector: 'app-paiement',
@@ -13,10 +14,10 @@ import { Router } from '@angular/router';
 })
 export class PaiementPage implements OnInit {
 
-  private card = {cardNumber: null, expiry: null, cvv: null, cardHolderName: '', cardType: ''}
+  private card = { cardNumber: null, expiry: null, cvv: null, cardHolderName: '', cardType: '' }
   userForm: FormGroup;
 
-  constructor(private cardIO: CardIO, private alertController: AlertController, private auth: AuthService,  private router: Router) {
+  constructor(private cardIO: CardIO, private alertController: AlertController, private auth: AuthService, private router: Router, private tts: TextToSpeech) {
     this.userForm = new FormGroup({
       cardNumber: new FormControl('', Validators.required),
       expiry: new FormControl('', Validators.required),
@@ -24,7 +25,7 @@ export class PaiementPage implements OnInit {
       cardHolderName: new FormControl('', Validators.required),
       cardType: new FormControl('', Validators.required),
     });
-   }
+  }
 
   ngOnInit() {
   }
@@ -62,7 +63,15 @@ export class PaiementPage implements OnInit {
 
   doLogout() {
     this.auth.logout();
-    //this.router.navigateByUrl('choix-role');
+  }
+
+  onInformationPressed() {
+    this.tts.speak({
+      text: "Cette page vous aidera à payer. Appuyez sur le bouton 'Scanner votre carte' pour ouvrir votre caméra et vous aider " +
+      "à plus facilement rentrer les informations de votre carte. La photo de votre carte n'est pas enregistrée ! Si le scan "+ 
+      "n'arrive pas à trouver tous les éléments sur l'image, il vous demandera de rentrer les valeurs vous-même.",
+      locale: 'fr-FR',
+    }).then(_ => console.log("Finished")).catch(_ => console.log("Error"));
   }
 
 }

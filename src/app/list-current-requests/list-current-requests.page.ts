@@ -1,12 +1,13 @@
-import {Component, OnInit} from '@angular/core';
-import {AuthService} from '../providers/auth.service';
-import {Status} from '../interfaces/Status';
-import {Router} from '@angular/router';
-import {AlertController} from '@ionic/angular';
-import {Aid} from '../interfaces/Aid';
-import {User} from '../interfaces/User';
-import {GeoPosition} from '../interfaces/GeoPosition';
-import {AidType} from '../interfaces/AidType';
+import { Component, OnInit } from '@angular/core';
+import { AuthService } from '../providers/auth.service';
+import { Status } from '../interfaces/Status';
+import { Router } from '@angular/router';
+import { AlertController } from '@ionic/angular';
+import { Aid } from '../interfaces/Aid';
+import { User } from '../interfaces/User';
+import { GeoPosition } from '../interfaces/GeoPosition';
+import { AidType } from '../interfaces/AidType';
+import { TextToSpeech } from '@ionic-native/text-to-speech/ngx';
 
 @Component({
     selector: 'app-list-current-requests',
@@ -24,7 +25,7 @@ export class ListCurrentRequestsPage implements OnInit {
     aids: Array<Aid>;
     defaultValidateMessage = '';
 
-    constructor(private auth: AuthService, private router: Router, private alertController: AlertController) {
+    constructor(private auth: AuthService, private router: Router, private alertController: AlertController, private tts: TextToSpeech) {
         this.seniorUser = JSON.parse(localStorage.getItem('userConnected'));
         const tmpAids: Array<Aid> = JSON.parse(localStorage.getItem('aids'));
         // Try to load local storage aids list, otherwise load some static data to show something
@@ -67,7 +68,7 @@ export class ListCurrentRequestsPage implements OnInit {
                 status: Status.CREATED,
                 aidType: AidType.IT
             }
-    ];
+        ];
         this.sortAidList();
     }
 
@@ -133,6 +134,19 @@ export class ListCurrentRequestsPage implements OnInit {
 
     sortAidList() {
         this.aids = this.aids.sort((aidA, aidB) => aidB.status - aidA.status);
+    }
+
+
+    onInformationPressed() {
+        this.tts.speak({
+            text: "Sur cette page vous pouvez voir vos demandes en cours." +
+            "Sur chaque élément, vous pouvez voir le type de la demande grâce à son icone" + 
+            ", la description que vous lui avez écrit et le statut actuel. Si vous voyez le statut créé" + 
+            ", cela veut dire que votre demande attend toujours que quelqu'un l'accepte. Si vous voyez le statut acceptée," +
+            " alors quelqu'un l'a déjà accepté et sa réalisation est en cours. Si vous voyez le statut A payer, alors la demande " + 
+            "a été finie et vous devez rembourser les éventuels frais à la personne qui vous a aidé. Pour cela, veuillez appuyer sur le bouton Payer",
+            locale: 'fr-FR',
+        }).then(_ => console.log("Finished")).catch(_ => console.log("Error"));
     }
 
 }

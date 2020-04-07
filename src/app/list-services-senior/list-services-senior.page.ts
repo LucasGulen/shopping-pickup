@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {NavigationExtras, Router} from '@angular/router';
 import {AuthService} from '../providers/auth.service';
 import {AidType} from '../interfaces/AidType';
-
+import { TextToSpeech } from '@ionic-native/text-to-speech/ngx';  
 
 
 @Component({
@@ -14,7 +14,7 @@ export class ListServicesSeniorPage implements OnInit {
 
   private services: Array<Number> = [];
 
-  constructor(private router: Router, private auth: AuthService) { }
+  constructor(private router: Router, private auth: AuthService, private tts: TextToSpeech) { }
 
   ngOnInit() {
     const keys = Object.keys(AidType);
@@ -36,6 +36,17 @@ export class ListServicesSeniorPage implements OnInit {
         aidType
       }
     };
+  }
+
+  onInformationPressed() {
+    this.tts.speak({
+      text: "Sur cette page vous pouvez choisir quel type de service vous cherchez. Appuyez sur le premier bouton si vous avez " +
+      "besoin d'aide en informatique. Par exemple, si vous avez une question en rapport avec votre téléphone ou votre ordinateur. " +
+      "Appuyez sur le deuxième bouton pour une aide en lien avec des courses. Par exemple, si vous avez besoin que quelqu'un " + 
+      "passe au supermarché ou à la pharmacie. Appuyez sur le troisième bouton si vous avez besoin d'aide avec vos animaux de " + 
+      "compagnie. Par exemple, si quelqu'un doit sortir votre chien.",
+      locale: 'fr-FR',
+    }).then(_ => console.log("Finished")).catch(_ => console.log("Error"));
   }
 
 }

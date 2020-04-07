@@ -17,4 +17,11 @@
     <ion-button (click)="onRecordingSelected();" class="ion-button" style="margin-bottom: 2%">Enregistrer sa voix</ion-button>
     <ion-button (click)="onValidateSelected()" class="ion-button">Valider la demande</ion-button>
   </div>
+
+   <!-- fab placed to the (vertical) center and end -->
+   <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button (click)="onInformationPressed()">
+      <ion-icon name="information-circle-outline"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
 </ion-content>
