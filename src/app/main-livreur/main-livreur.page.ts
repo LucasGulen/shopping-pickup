@@ -76,7 +76,7 @@ export class MainLivreurPage implements OnInit {
             console.log(this.aids)
             this.sortArrayByLocation(this.aids);
             this.displayedAids = this.aids;
-            this.displayedAids = this.displayedAids.filter(currAid => currAid.aidUser == null || currAid.aidUser.username === this.connectedUser.username );
+            this.displayedAids = this.displayedAids.filter(currAid => currAid.aidUser == null || currAid.aidUser.username == this.connectedUser.username );
         }
         this.checkDataExist();
     }
