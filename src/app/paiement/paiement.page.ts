@@ -5,10 +5,11 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import {AlertController, LoadingController} from '@ionic/angular';
 import { AuthService } from '../providers/auth.service';
 import {ActivatedRoute, Router} from '@angular/router';
-import {throwError} from 'rxjs';
+import { TextToSpeech } from '@ionic-native/text-to-speech/ngx';
 import {Aid} from '../interfaces/Aid';
 import {GeoPosition} from '../interfaces/GeoPosition';
 import {Storage} from '@ionic/storage';
+import {throwError} from 'rxjs';
 
 @Component({
   selector: 'app-paiement',
@@ -28,7 +29,8 @@ export class PaiementPage implements OnInit {
               private router: Router,
               private route: ActivatedRoute,
               private storage: Storage,
-              private loadingCtrl: LoadingController) {
+              private loadingCtrl: LoadingController,
+              private tts: TextToSpeech) {
     this.userForm = new FormGroup({
       cardNumber: new FormControl('', Validators.required),
       expiry: new FormControl('', Validators.required),
@@ -36,7 +38,7 @@ export class PaiementPage implements OnInit {
       cardHolderName: new FormControl('', Validators.required),
       cardType: new FormControl('', Validators.required),
     });
-   }
+  }
 
    ngOnInit(): void {
    }
@@ -91,7 +93,15 @@ export class PaiementPage implements OnInit {
 
   doLogout() {
     this.auth.logout();
-    // this.router.navigateByUrl('choix-role');
+  }
+
+  onInformationPressed() {
+    this.tts.speak({
+      text: 'Cette page vous aidera à payer. Appuyez sur le bouton \'Scanner votre carte\' pour ouvrir votre caméra et vous aider ' +
+      'à plus facilement rentrer les informations de votre carte. La photo de votre carte n\'est pas enregistrée ! Si le scan ' +
+      'n\'arrive pas à trouver tous les éléments sur l\'image, il vous demandera de rentrer les valeurs vous-même.',
+      locale: 'fr-FR',
+    }).then(_ => console.log('Finished')).catch(_ => console.log('Error'));
   }
 
 }
