@@ -36,7 +36,7 @@ export class DemandeDetailsLivreurPage implements OnInit {
             this.aids.forEach(currAid => {
                 currAid.location = new GeoPosition(currAid.location.latitude, currAid.location.longitude);
             });
-            this.aid.status > 0 && this.aid.aidUser.username ===  this.userConnected.username ? this.alreadyAccepted = true : this.alreadyAccepted = false;
+            this.aid.status > 0 && this.aid.aidUser.username ==  this.userConnected.username ? this.alreadyAccepted = true : this.alreadyAccepted = false;
         });
     }
 
