@@ -73,6 +73,7 @@ export class AidDescriptionPage implements OnInit {
         const connectedUser: User = JSON.parse(localStorage.getItem('userConnected'));
 
         const currentPosition = await this.geolocation.getCurrentPosition();
+        console.log(currentPosition)
 
         const location = new GeoPosition(currentPosition.coords.latitude, currentPosition.coords.longitude);
 
