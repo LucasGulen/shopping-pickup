@@ -6,6 +6,8 @@ import {GeoPosition} from '../interfaces/GeoPosition';
 import {Geolocation} from '@ionic-native/geolocation/ngx';
 import {AlertController, ToastController} from '@ionic/angular';
 import {AuthService} from '../providers/auth.service';
+import {NavigationExtras, Router} from "@angular/router";
+import {stringify} from "querystring";
 
 @Component({
     selector: 'app-main-livreur',
@@ -21,7 +23,7 @@ export class MainLivreurPage implements OnInit {
     private aidTypes: Array<number> = [];
     private selectedAidType = -1;
 
-    constructor(private geolocation: Geolocation, private toastCtrl: ToastController, private alertCtrl: AlertController, private auth: AuthService) {
+    constructor(private geolocation: Geolocation, private toastCtrl: ToastController, private alertCtrl: AlertController, private auth: AuthService, private router: Router) {
     }
 
     async ngOnInit() {
@@ -88,6 +90,19 @@ export class MainLivreurPage implements OnInit {
         return arr;
     }
 
+    showDetails(aid: Aid) {
+        this.router.navigate(['demande-details-livreur'], this.getNavigationExtras(aid));
+    }
+
+    getNavigationExtras(aid: Aid): NavigationExtras {
+        return {
+            queryParams: {
+                aid: JSON.stringify(aid)
+            }
+        };
+    }
+
+    /*
     async takeAid(aid: Aid) {
         const alert = await this.alertCtrl.create({
             header: 'Aider quelqu\'un',
@@ -123,6 +138,7 @@ export class MainLivreurPage implements OnInit {
         });
         alert.present();
     }
+    */
 
     sortArrayByLocation(arr: Array<Aid>) {
         arr.sort((aid1, aid2) =>

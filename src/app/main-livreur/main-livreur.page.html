@@ -13,7 +13,7 @@
 
         </ion-select>
         <ion-list>
-            <ion-card *ngFor="let aid of displayedAids" class="card">
+            <ion-card (click)="showDetails(aid)" *ngFor="let aid of displayedAids" class="card">
 
                 <ion-card-header class="card--header">
                     <ion-card-title class="header--title">{{aid.aidType | aidTitle}}</ion-card-title>
@@ -25,7 +25,6 @@
                     <p class="card--description">
                         {{aid.text}}
                     </p>
-                    <ion-button (click)="takeAid(aid)"  class="card--button ion-text-wrap" fill="outline" color="success">Prendre la demande</ion-button>
                 </ion-card-content>
 
             </ion-card>

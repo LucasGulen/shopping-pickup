@@ -18,7 +18,7 @@ import {SpeechRecognition} from '@ionic-native/speech-recognition/ngx';
 })
 export class AidDescriptionPage implements OnInit {
 
-    @ViewChild('textarea') textarea;
+    @ViewChild('textarea', {static: true}) textarea;
 
     constructor(private route: ActivatedRoute,
                 private router: Router,
