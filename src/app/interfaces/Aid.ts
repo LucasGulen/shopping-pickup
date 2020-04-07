@@ -15,4 +15,5 @@ export interface Aid {
     location: GeoPosition;
     status: Status;
     aidType: AidType;
+    photo?: number;
 }

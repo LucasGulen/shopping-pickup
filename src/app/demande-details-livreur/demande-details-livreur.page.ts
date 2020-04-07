@@ -1,12 +1,13 @@
 import {Component, OnInit} from '@angular/core';
 import {Aid} from '../interfaces/Aid';
-import {ActivatedRoute, NavigationExtras, Route} from '@angular/router';
+import {ActivatedRoute} from '@angular/router';
 import {GeoPosition} from '../interfaces/GeoPosition';
 import {Geolocation} from '@ionic-native/geolocation/ngx';
 import {AlertController, ModalController, ToastController} from '@ionic/angular';
 import {ModalPhotoComponent} from '../modal-photo/modal-photo.component';
 import {Status} from '../interfaces/Status';
 import {User} from '../interfaces/User';
+import {Storage} from '@ionic/storage';
 
 @Component({
     selector: 'app-demande-details-livreur',
@@ -25,7 +26,8 @@ export class DemandeDetailsLivreurPage implements OnInit {
                private geoLocation: Geolocation,
                private alertController: AlertController,
                private modalController: ModalController,
-               private toastCtrl: ToastController) {
+               private toastCtrl: ToastController,
+               private storage: Storage) {
         route.queryParams.subscribe(params => {
             this.userConnected = JSON.parse(localStorage.getItem('userConnected'));
             this.aid = JSON.parse(params.aid);
@@ -113,9 +115,24 @@ export class DemandeDetailsLivreurPage implements OnInit {
         });
 
         modal.onDidDismiss()
-            .then(data => {
+            .then(async data => {
                 if (data.data !== undefined) {
-                    // save the photo into local storage
+                    if (data.data.photo !== '') {
+                        let photos = await this.storage.get('photos');
+                        if (photos == null) {
+                            photos = new Array<string>();
+                        }
+                        photos.push(data.data.photo);
+                        await this.storage.set('photos', photos);
+                        this.aids.map(currentAid => {
+                            if (currentAid.id === this.aid.id) {
+                                currentAid.photo = photos.length - 1;
+                                currentAid.status = Status.DELIVERED;
+                            }
+                            return currentAid;
+                        });
+                        localStorage.setItem('aids', JSON.stringify(this.aids));
+                    }
                 }
             });
         return await modal.present();

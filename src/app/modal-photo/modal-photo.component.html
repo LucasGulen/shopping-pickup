@@ -11,5 +11,7 @@
   <div class="center-content">
     <ion-button (click)="loadFromGallery()">Charger depuis la gallerie</ion-button>
     <ion-button (click)="takePhoto()">Prendre une photo</ion-button>
+    <ion-img *ngIf="photo !== ''" [src]="photo"></ion-img>
+    <ion-button *ngIf="photo !== ''" (click)="dismiss()">Valider la photo</ion-button>
   </div>
 </ion-content>
