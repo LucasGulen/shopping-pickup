@@ -14,16 +14,19 @@ import {PipesModule} from './pipes/pipes.module';
 import {AidTitlePipe} from './pipes/aid-title.pipe';
 import { CardIO } from '@ionic-native/card-io/ngx';
 import {ModalPhotoComponent} from './modal-photo/modal-photo.component';
+import {Camera} from '@ionic-native/camera/ngx';
+import {IonicStorageModule, Storage} from '@ionic/storage';
 
 @NgModule({
   declarations: [AppComponent, ModalPhotoComponent],
   entryComponents: [ModalPhotoComponent],
-  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, PipesModule],
+  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, PipesModule, IonicStorageModule.forRoot()],
   providers: [
     StatusBar,
     SplashScreen,
     SpeechRecognition,
     Geolocation,
+    Camera,
     CardIO,
     {provide: RouteReuseStrategy, useClass: IonicRouteStrategy}
   ],
