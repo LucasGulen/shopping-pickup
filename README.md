@@ -2,4 +2,6 @@ The aim of this project was to create a mobile application that could be useful 
 
 The objective was to build an Ionic application that could help persons at risk who may need some help, such as IT troubleshooting and buy some food.
 
-This project was made with collaoration of Flavio Barreiro Lindo, Alex Perritaz, Loïc Schupbach and David Roch.
+We achieved to build the front part and simulate a database to make a proof of work.
+
+This project was made with collaboration of Flavio Barreiro Lindo, Alex Perritaz, Loïc Schupbach and David Roch as part of our Master in Information Science.
